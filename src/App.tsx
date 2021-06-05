@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import GistsWrapper from './ts/gistsWrapper';
+import { token } from './config.json';
 
 const App = () => {
     return (
