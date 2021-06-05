@@ -1,0 +1,54 @@
+.gist {
+    border-radius: 1em;
+    border: 1px solid var(--border-color);
+    padding: 1em 1.5em;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.gist h3 {
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: .5em;
+}
+
+.gist .files {
+    margin-top: 1em;
+}
+
+.gist .file {
+    margin-bottom: .5em;
+}
+
+.gist .file svg {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    border: 1px solid var(--border-color);
+    padding: .5em;
+    vertical-align: middle;
+}
+
+.gist .file .filename {
+    font-size: 1.1rem;
+    vertical-align: middle;
+    margin-left: .5em;
+}
+
+.gist .gist-info {
+    text-transform: uppercase;
+    font-size: .7rem;
+    margin-left: 1em;
+    vertical-align: middle;
+    color: var(--font-color);
+    font-weight: bold;
+    background-color: var(--main-color);
+    border-radius: 10px;
+    padding: .5em .7em;
+}
+
+.gist .gist-info.private {
+    background: transparent;
+    border: 2px solid var(--main-color);
+}

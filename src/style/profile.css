@@ -1,0 +1,58 @@
+.profile {
+    width: 250px;
+    border: 1px solid var(--border-color);
+    border-radius: 1em;
+    position: fixed;
+    padding: 1.5em;
+}
+
+.profile h2 {
+    margin: 0;
+}
+
+.profile form {
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.profile input[type=password] {
+    font-size: 1.1rem;
+    border-radius: 10px;
+    outline: none;
+    border: 1px solid var(--border-color);
+    padding: .5em;
+    background: transparent;
+    width: 90%;
+}
+
+.profile input[type=submit] {
+    text-transform: uppercase;
+    padding: .6em 1em;
+    border-radius: 10px;
+    font-weight: bold;
+    background-color: var(--main-color);
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: .9rem;
+    min-width: 80px;
+    margin-top: 1em;
+}
+
+.profile .name-container {
+    border-left: 2px solid var(--font-color);
+    padding-left: 1em;
+    margin-bottom: 2em;
+}
+
+.profile .repo-link {
+    display: block;
+    width: 32px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: -1em;
+}
+
+.profile img.logo {
+    height: 28px;
+}
