@@ -4,6 +4,7 @@
     padding: 1em 1.5em;
     display: block;
     margin-bottom: 1em;
+    background: var(--theme-color2);
 }
 
 .gist h3 {
@@ -58,6 +59,7 @@
     border: 1px solid var(--border-color);
     padding: 1em;
     margin-bottom: 1em;
+    background: var(--theme-color2);
 }
 
 .buttons-panel .button {

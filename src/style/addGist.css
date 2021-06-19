@@ -1,0 +1,147 @@
+input[type=text] {
+    outline: none;
+    background: var(--theme-color2);
+    padding: .5em 1em;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 1em;
+    width: 250px;
+}
+
+textarea {
+    width: 100%;
+    display: block;
+    outline: none;
+    background: var(--theme-color2);
+    padding: 1em;
+    font-size: 1.1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 1em;
+    resize: vertical;
+    min-height: 200px;
+    font-family: 'Source Code Pro', monospace;
+    color: var(--font-color);
+    font-size: .9rem;
+}
+
+.add-new-gist .description {
+    width: 60%;
+}
+
+.add-new-gist .header {
+    margin-bottom: 2em;
+}
+
+.add-new-gist .header * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.add-new-gist .new-file {
+    margin-top: 1em;
+}
+
+.add-new-gist .code-sign {
+    text-transform: uppercase;
+    font-size: .9rem;
+    font-weight: bold;
+    margin-left: .5em;
+    color: var(--theme-color3);
+    margin-top: .5em;
+    display: inline-block;
+}
+
+.add-new-gist .settings {
+    margin-bottom: .5em;
+}
+
+.add-new-gist .settings * {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.add-new-gist .private {
+    text-transform: uppercase;
+    font-size: .7rem;
+    color: var(--theme-color3);
+    font-weight: bold;
+    margin-left: 2em;
+}
+
+.add-new-gist .switch-button input[type=checkbox] {
+    display: none;
+}
+
+.add-new-gist .switch-button {
+    margin-left: .5em;
+}
+
+.add-new-gist .switch-button label {
+    width: 50px;
+    height: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    display: block;
+    position: relative;
+    cursor: pointer;
+    background-color: var(--theme-color2);
+    transition: background-color .3s;
+}
+
+.add-new-gist .switch-button label::after{
+    content: '';
+    position: absolute;
+    width: 19px;
+    height: 19px;
+    background-color: var(--main-color);
+    border-radius: 50%;
+    top: 3px;
+    left: 3px;
+    transition: left .3s;
+}
+
+.add-new-gist .switch-button input[type=checkbox]:checked ~ label::after {
+    left: 28px;
+    opacity: .5;
+}
+
+.add-new-gist .switch-button input[type=checkbox]:checked ~ label {
+    background-color: transparent;
+}
+
+.add-new-gist .buttons {
+    margin-top: 2em;
+}
+
+.add-new-gist .buttons div,
+.add-new-gist input[type=submit] {
+    outline: none;
+    background-color: var(--main-color);
+    border-radius: 1em;
+    margin-right: .5em;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    font-size: .9rem;
+    padding: .7em 0;
+    width: 100px;
+    display: block;
+    text-align: center;
+    margin-bottom: .5em;
+}
+
+.add-new-gist .new-file .remove-button {
+    margin-left: .5em;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity .2s;
+}
+
+.add-new-gist .new-file .remove-button svg {
+    width: 30px;
+    height: 30px;
+}
+
+.add-new-gist .new-file:hover .remove-button {
+    opacity: 1;
+}

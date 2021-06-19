@@ -4,6 +4,7 @@
     border-radius: 1em;
     position: fixed;
     padding: 1.5em;
+    background: var(--theme-color2);
 }
 
 .profile h2 {

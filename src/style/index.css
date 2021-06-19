@@ -1,10 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
 
 html {
-    --theme-color: #0b0b13;
+    --theme-color: #141820;
     --font-color: #fff;
-    --border-color: #3f3f3f;
+    --border-color: #464646;
     --main-color: #336bd3;
+    --theme-color2: #0b0e13;
+    --theme-color3: #8b8b8b;
+    --red: #E04343;
+    --green: #19a046;
 }
 
 body {
@@ -31,8 +36,45 @@ input {
     margin-right: auto;
     position: relative;
     margin-top: 50px;
+    margin-bottom: 10em;
 }
 
 .content {
     margin-left: 350px;
+}
+
+.message {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 1em;
+    font-size: 1rem;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    animation: message-animation .3s;
+    z-index: 1;
+}
+
+.message.success {
+    background-color: var(--green);
+}
+
+.message.failure {
+    background-color: var(--red);
+}
+
+.message.hiding {
+    animation: hiding-message-animation .4s;
+}
+
+@keyframes message-animation {
+    0% { transform: translateY(100px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes hiding-message-animation {
+    0% { transform: translateY(0px); }
+    100% { transform: translateY(100px); }
 }

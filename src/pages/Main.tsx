@@ -57,7 +57,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                 <div className="button left-arrow" title="Previous page" onClick={prevoiusPage}><ArrowIcon/></div>
                 <div className="button" title="Current page">{currentPage}</div>
                 <div className="button" title="Next page" onClick={nextPage}><ArrowIcon/></div>
-                <div className="button" title="Add new gist"><PlusIcon/></div>
+                <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
             </div>
 
             { gistsList.map((gist: IGist, key: number) => (

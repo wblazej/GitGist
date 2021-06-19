@@ -12,4 +12,16 @@ export interface IGist {
     files: IFile[]
 }
 
+export interface INewFile {
+    filename: string;
+    content: string;
+}
+
+export interface IMessage {
+    content: string;
+    status: string;
+    shown: boolean;
+    hiding: boolean;
+}
+
 export default {}
