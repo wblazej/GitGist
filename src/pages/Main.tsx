@@ -1,35 +1,30 @@
-import React from 'react';
-import GistsWrapper from './../ts/gistsWrapper'
-import './../style/main.css'
-import PythonIcon from './../img/langIcons/Python';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
-import { Gist, File } from './../ts/interfaces';
+import GistsWrapper from './../ts/gistsWrapper'
+import { IGist, IFile } from './../ts/interfaces';
+
+import './../style/main.css'
+import LanguagesIcons from './../components/Languages';
+import ArrowIcon from './../img/icons/Arrow';
+import PlusIcon from './../img/icons/Plus';
+
 
 interface IProps {
     wrapper: GistsWrapper
 }
 
-interface IState {
-    gists: Gist[]
-}
+const Main: React.FunctionComponent<IProps> = (props: IProps) => {
+    const [gistsList, setGistsList] = useState(Array<IGist>())
+    const [currentPage, setCurrentPage] = useState(1)
 
-class Main extends React.Component<IProps, IState> {
-    constructor(props: IProps) {
-        super(props)
-
-        this.state = {
-            gists: []
-        }
-    }
-
-    componentDidMount() {
-        this.props.wrapper.getGists(null, 5, 1)
+    useEffect(() => {
+        props.wrapper.getGists(null, 10, currentPage)
         .then(response => {
             if (response.status === 200) {
-                const gists: Gist[] = []
+                const gists: IGist[] = []
 
                 response.data.forEach((data: any) => {
-                    const files: File[] = []
+                    const files: IFile[] = []
                     
                     Object.keys(data.files).forEach((key: string) => {
                         files.push({
@@ -48,36 +43,41 @@ class Main extends React.Component<IProps, IState> {
                     })
                 })
 
-                this.setState({gists: gists})
+                setGistsList(gists)
             }
         })
-    }
+    }, [props.wrapper, currentPage])
 
-    render() {
-        return (
-            <div className="gists-container">
-                { this.state.gists.map((gist: Gist, key: number) => (
-                    <Link to={`/gists/${gist.id}`} className="gist" key={key}>
-                        <h3>{gist.description}</h3>
-                        <span className="gist-info">{gist.filesCount} {gist.filesCount === 1 ? "file" : "files"}</span>
-                        { !gist.isPublic && <span className="gist-info private">private</span> }
-                        
-                        <div className="files">
-                            <div className="file">
-                                <PythonIcon/>
-                                <span className="filename">test.py</span>
-                            </div>
-                            <div className="file">
-                                <PythonIcon/>
-                                <span className="filename">test.py</span>
-                            </div>
-                        </div>
-                    </Link>
-                ))}
-                <></>
+    const nextPage = () => setCurrentPage(currentPage + 1)
+    const prevoiusPage = () => setCurrentPage(currentPage - 1 > 0 ? currentPage - 1 : 1)
+
+    return (
+        <div className="gists-container">
+            <div className="buttons-panel">
+                <div className="button left-arrow" title="Previous page" onClick={prevoiusPage}><ArrowIcon/></div>
+                <div className="button" title="Current page">{currentPage}</div>
+                <div className="button" title="Next page" onClick={nextPage}><ArrowIcon/></div>
+                <div className="button" title="Add new gist"><PlusIcon/></div>
             </div>
-        )
-    }
+
+            { gistsList.map((gist: IGist, key: number) => (
+                <Link to={`/gists/${gist.id}`} className="gist" key={key}>
+                    <h3>{gist.description}</h3>
+                    <span className="gist-info">{gist.filesCount} {gist.filesCount === 1 ? "file" : "files"}</span>
+                    { !gist.isPublic && <span className="gist-info private">private</span> }
+                    
+                    <div className="files">
+                        { gist.files.map((file: IFile, key: number) => (
+                            <div className="file">
+                                <LanguagesIcons lang={file.language} />
+                                <span className="filename">{file.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                </Link>
+            ))}
+        </div>
+    )
 }
 
 export default Main;
