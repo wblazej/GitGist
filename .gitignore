@@ -23,4 +23,4 @@ yarn-debug.log*
 yarn-error.log*
 
 # config file (can contain sensitive data)
-src/config.json
+__tests__/config.json
