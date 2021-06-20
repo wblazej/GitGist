@@ -55,7 +55,13 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
                 setBeforeUpdateFilesState(files)
             }
         })
-    }, [params.id])
+        .catch(error => {
+            if (error.response.status === 401)
+                props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+            else if (error.response.status === 404)
+                props.throwMessage('failure', "Gist with this ID doesn't exist")
+        })
+    }, [params.id, props.wrapper])
 
     const update = (Event: React.FormEvent) => {
         Event.preventDefault()
@@ -97,6 +103,10 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
                 props.throwMessage('success', "Gist has been successfully updated")
                 history.push(`/gists/${params.id}`)
             }
+        })
+        .catch(error => {
+            if (error.response.status === 401)
+                props.throwMessage('failure', "You didn't provide any token or it's incorrect")
         })
     }
 

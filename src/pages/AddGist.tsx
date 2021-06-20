@@ -63,6 +63,10 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
             setIsPublic(false)
             setFiles([])
         })
+        .catch(error => {
+            if (error.response.status === 401)
+                props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+        })
     }
 
     return (
