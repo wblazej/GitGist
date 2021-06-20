@@ -1,19 +1,36 @@
 import GistsWrapper from '../src/ts/gistsWrapper';
-import { token } from '../src/config.json';
+import { token } from './config.json';
 
 describe("Tests for GitHub Gists wrapper", () => {
     const wrapper = new GistsWrapper(token)
 
-    test('Incorrect GitHub API token', () => {
-        const wrongTokenWrapper = new GistsWrapper("wrongtoken")
-        return wrongTokenWrapper.getGists().catch(error => {
-            expect(error.response.status).toEqual(401)
+    describe('Token validation', () => {
+        test('GitHub API token validation', () => {
+            return wrapper.validate().then(response => {
+                expect(response.status).toEqual(200)
+            })
+        })
+
+        test('GitHub API token validation with wrong token', () => {
+            const wrongTokenWrapper = new GistsWrapper("wrongtoken")
+            return wrongTokenWrapper.validate().catch(error => {
+                expect(error.response.status).toEqual(401)
+            })
         })
     })
 
-    test('Getting gists', () => {
-        return wrapper.getGists(null, 10, 1).then(response => {
-            expect(response.status).toEqual(200)
+    describe('Getting gists', () => {
+        test('Getting gists', () => {
+            return wrapper.getGists(null, 10, 1).then(response => {
+                expect(response.status).toEqual(200)
+            })
+        })
+
+        test('Getting gists with incorrect GitHub API token', () => {
+            const wrongTokenWrapper = new GistsWrapper("wrongtoken")
+            return wrongTokenWrapper.getGists().catch(error => {
+                expect(error.response.status).toEqual(401)
+            })
         })
     })
 
