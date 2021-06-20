@@ -38,3 +38,6 @@ On the left side of the page there is a panel, where you have to input your GitH
 ## TODO
 - add more languages icons support
 - add searching gists by date
+- add mobile devices support
+
+Any issues? Please, [let me know](https://github.com/wblazej/GitGist/issues)
