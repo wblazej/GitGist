@@ -4,7 +4,7 @@ import './../style/gist.css'
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import Languages from './../components/Languages';
-import { IDisplayGist, IDisplayFile } from './../ts/interfaces';
+import { IGist, IFile } from './../ts/interfaces';
 import { useParams } from "react-router-dom";
 import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
@@ -22,7 +22,7 @@ interface IProps {
 }
 
 const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
-    const [gist, setGist] = useState<IDisplayGist>()
+    const [gist, setGist] = useState<IGist>()
 
     const params = useParams<IParams>()
     const history = useHistory()
@@ -31,7 +31,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
         props.wrapper.getGist(params.id)
         .then(response => {
             if (response.status === 200) {
-                const files: IDisplayFile[] = []
+                const files: IFile[] = []
                 
                 Object.keys(response.data.files).forEach((key: string) => {
                     files.push({
@@ -42,6 +42,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                 })
 
                 setGist({
+                    id: params.id,
                     createdAt: response.data.created_at,
                     description: response.data.description,
                     isPublic: response.data.public,
@@ -81,16 +82,16 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     </div>
                 </div>
 
-                { gist.files.map((file: IDisplayFile, i: number) => (
+                { gist.files.map((file: IFile, i: number) => (
                     <div className="code-block" key={i}>
                         <div className="file-header">
-                            <Languages lang={file.language} />
+                            <Languages lang={file.language ? file.language : ""} />
                             <span>{file.name}</span>
                         </div>
                         <div className="lines-counter">
                             {getLinesCounter((file.content.match(/\n/g) || []).length + 1)}
                         </div>
-                        <SyntaxHighlighter language={file.language.toLowerCase()} style={docco}>
+                        <SyntaxHighlighter language={file.language ? file.language.toLowerCase() : ""} style={docco}>
                             {file.content}
                         </SyntaxHighlighter>
                     </div>

@@ -1,20 +1,15 @@
 export interface IFile {
     name: string,
-    language: string;
+    language: string | null;
+    content: string;
 }
 
 export interface IGist {
     id: string,
-    createdAt: Date,
+    createdAt: string,
     description: string,
     isPublic: boolean,
-    filesCount: number,
     files: IFile[]
-}
-
-export interface INewFile {
-    filename: string;
-    content: string;
 }
 
 export interface IMessage {
@@ -22,19 +17,6 @@ export interface IMessage {
     status: string;
     shown: boolean;
     hiding: boolean;
-}
-
-export interface IDisplayGist {
-    createdAt: string,
-    description: string,
-    isPublic: boolean,
-    files: IDisplayFile[]
-}
-
-export interface IDisplayFile {
-    name: string;
-    language: string;
-    content: string;
 }
 
 export default {}

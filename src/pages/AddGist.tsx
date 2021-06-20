@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import GistsWrapper from './../ts/gistsWrapper';
 import './../style/addGist.css';
-import { INewFile } from './../ts/interfaces';
+import { IFile } from './../ts/interfaces';
 import TrashIcon from './../img/icons/Trash';
 
 interface IProps {
@@ -10,7 +10,7 @@ interface IProps {
 }
 
 const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
-    const [files, setFiles] = useState(Array<INewFile>())
+    const [files, setFiles] = useState(Array<IFile>())
     const [description, setDescription] = useState("")
     const [isPublic, setIsPublic] = useState(false)
 
@@ -21,16 +21,16 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
         setIsPublic(Event.currentTarget.checked)
 
     const addFile = () =>
-        setFiles(files => [...files].concat({filename: "", content: ""}))
+        setFiles(files => [...files].concat({name: "", content: "", language: null}))
 
     const filenameHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: INewFile, index: number) => index === i ? {...item, filename: value} : item))
+        setFiles(files => files.map((item: IFile, index: number) => index === i ? {...item, name: value} : item))
 
     const contentHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: INewFile, index: number) => index === i ? {...item, content: value} : item))
+        setFiles(files => files.map((item: IFile, index: number) => index === i ? {...item, content: value} : item))
 
     const removeFile = (i: number) =>
-        setFiles(files => files.filter((value: INewFile, index: number) => index !== i))
+        setFiles(files => files.filter((value: IFile, index: number) => index !== i))
 
     const create = (Event: React.FormEvent) => {
         Event.preventDefault()
@@ -41,16 +41,16 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
         if (files.length === 0)
             return props.throwMessage('failure', "Add at least one file")
 
-        files.forEach((value: INewFile, index: number) => {
-            if (value.filename.length === 0)
+        files.forEach((value: IFile, index: number) => {
+            if (value.name.length === 0)
                 return props.throwMessage('failure', `Filename cannot be blank in file ${index + 1}`)
             if (value.content.length === 0)
                 return props.throwMessage('failure', `File content cannot be blank in file ${index + 1}`)
         })
 
         let filesObject: any = {}
-        files.forEach((value: INewFile) => {
-            filesObject[value.filename] = {content: value.content}
+        files.forEach((value: IFile) => {
+            filesObject[value.name] = {content: value.content}
         })
 
         console.log(filesObject)
@@ -80,11 +80,11 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
                     </div>
                 </div>
 
-                { files.map((file: INewFile, i: number) => (
+                { files.map((file: IFile, i: number) => (
                     <div className="new-file" key={i}>
                         <div className="settings">
                             <input 
-                                type="text" placeholder="File name" value={file.filename} 
+                                type="text" placeholder="File name" value={file.name} 
                                 onChange={(Event: React.FormEvent<HTMLInputElement>) => filenameHandler(Event.currentTarget.value, i)} 
                             />
                             <div className="remove-button" onClick={() => removeFile(i)}><TrashIcon/></div>

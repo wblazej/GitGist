@@ -29,7 +29,8 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     Object.keys(data.files).forEach((key: string) => {
                         files.push({
                             name: data.files[key].filename,
-                            language: data.files[key].language
+                            language: data.files[key].language,
+                            content: data.files[key].content
                         })
                     })
 
@@ -38,7 +39,6 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                         createdAt: data.created_at,
                         description: data.description,
                         isPublic: data.public,
-                        filesCount: files.length,
                         files: files
                     })
                 })
@@ -63,13 +63,13 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
             { gistsList.map((gist: IGist, key: number) => (
                 <Link to={`/gists/${gist.id}`} className="gist" key={key}>
                     <h3>{gist.description}</h3>
-                    <span className="gist-info">{gist.filesCount} {gist.filesCount === 1 ? "file" : "files"}</span>
+                    <span className="gist-info">{gist.files.length} {gist.files.length === 1 ? "file" : "files"}</span>
                     { !gist.isPublic && <span className="gist-info private">private</span> }
                     
                     <div className="files">
                         { gist.files.map((file: IFile, i: number) => (
                             <div className="file" key={i}>
-                                <LanguagesIcons lang={file.language} />
+                                <LanguagesIcons lang={file.language ? file.language : ""} />
                                 <span className="filename">{file.name}</span>
                             </div>
                         ))}
