@@ -40,4 +40,9 @@ On the left side of the page there is a panel, where you have to input your GitH
 - add searching gists by date
 - add mobile devices support
 
+---
+
+Icons: https://www.figma.com/file/u4tgXFq9SXhjyrT1NDEfAe/GitGist?node-id=27%3A0
+
+
 Any issues? Please, [let me know](https://github.com/wblazej/GitGist/issues)
