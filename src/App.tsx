@@ -6,6 +6,7 @@ import Profile from './components/Profile';
 import Main from './pages/Main';
 import AddGist from './pages/AddGist';
 import { IMessage } from '././/ts/interfaces';
+import Gist from './pages/Gist';
 
 const App = () => {
     const wrapper = new GistsWrapper(token)
@@ -36,6 +37,7 @@ const App = () => {
                     <Switch>
                         <Route exact path='/'><Main wrapper={wrapper}/></Route>
                         <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
+                        <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} /></Route>
                     </Switch>
                 </Router>
             </div>

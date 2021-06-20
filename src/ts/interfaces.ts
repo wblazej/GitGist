@@ -24,4 +24,17 @@ export interface IMessage {
     hiding: boolean;
 }
 
+export interface IDisplayGist {
+    createdAt: string,
+    description: string,
+    isPublic: boolean,
+    files: IDisplayFile[]
+}
+
+export interface IDisplayFile {
+    name: string;
+    language: string;
+    content: string;
+}
+
 export default {}
