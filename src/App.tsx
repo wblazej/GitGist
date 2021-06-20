@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import GistsWrapper from './ts/gistsWrapper';
-import { token } from './config.json';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Profile from './components/Profile';
 import Main from './pages/Main';
@@ -10,7 +9,12 @@ import Gist from './pages/Gist';
 import EditGist from './pages/EditGist';
 
 const App = () => {
-    const wrapper = new GistsWrapper(token)
+    const [token, setToken] = useState("")
+    const [wrapper, setWrapper] = useState<GistsWrapper>(new GistsWrapper(""))
+    const [tokenIsCorrect, setTokenIsCorrect] = useState(false)
+
+    const [displayName, setDisplayName] = useState("")
+    const [login, setLogin] = useState("")
 
     const [message, setMessage] = useState<IMessage>({content: '', status: '', shown: false, hiding: false})
 
@@ -26,6 +30,23 @@ const App = () => {
             }, 300)
         }, expire - 300)
     }
+
+    const createWrapper = () => {
+        const wrapper = new GistsWrapper(token)
+        wrapper.validate()
+        .then(response => {
+            if (response.status === 200) {
+                setWrapper(wrapper)
+                setTokenIsCorrect(true)
+                setDisplayName(response.data.name)
+                setLogin(response.data.login)
+            }
+        })
+        .catch(error => {
+            if (error.response.status === 401)
+                throwMessage('failure', "Token is incorrect")
+        })
+    }
     
 
     return (
@@ -33,10 +54,10 @@ const App = () => {
         { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
         <div className="container">
             <Router>
-                <Profile/>
+                <Profile setToken={setToken} createWrapper={createWrapper} displayName={displayName} login={login} />
                 <div className="content">
                     <Switch>
-                        <Route exact path='/'><Main wrapper={wrapper}/></Route>
+                        <Route exact path='/'><Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect}/></Route>
                         <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
                         <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} /></Route>
                         <Route exact path='/edit/:id'><EditGist wrapper={wrapper} throwMessage={throwMessage} /></Route>
