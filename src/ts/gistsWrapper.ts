@@ -37,10 +37,9 @@ class GistsWrapper {
 
     deleteGist = (gistID: string) => this.client.delete(`/gists/${gistID}`)
 
-    updateGist = (gistID: string, description: string, isPublic: boolean, files: object) =>
+    updateGist = (gistID: string, description: string, files: object) =>
         this.client.patch(`/gists/${gistID}`, {
             description: description,
-            public: isPublic,
             files: files
         })
 }

@@ -20,13 +20,9 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
     const [beforeUpdateFilesState, setBeforeUpdateFilesState] = useState(Array<IEditableFile>())
     const [files, setFiles] = useState(Array<IEditableFile>())
     const [description, setDescription] = useState("")
-    const [isPublic, setIsPublic] = useState(false)
 
     const descriptionHandler = (Event: React.FormEvent<HTMLInputElement>) =>
         setDescription(Event.currentTarget.value)
-
-    const isPublicHandler = (Event: React.FormEvent<HTMLInputElement>) =>
-        setIsPublic(Event.currentTarget.checked)
 
     const addFile = () =>
         setFiles(files => [...files].concat({name: "", content: "", deleted: false}))
@@ -55,7 +51,6 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
                 })
 
                 setDescription(response.data.description)
-                setIsPublic(response.data.public)
                 setFiles(files)
                 setBeforeUpdateFilesState(files)
             }
@@ -72,21 +67,31 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
             return props.throwMessage('failure', "Add at least one file")
 
         files.forEach((value: IEditableFile, index: number) => {
-            if (value.name.length === 0)
-                return props.throwMessage('failure', `Filename cannot be blank in file ${index + 1}`)
-            if (value.content.length === 0)
-                return props.throwMessage('failure', `File content cannot be blank in file ${index + 1}`)
+            if (!value.deleted) {
+                if (value.name.length === 0)
+                    return props.throwMessage('failure', `Filename cannot be blank in file ${index + 1}`)
+                if (value.content.length === 0)
+                    return props.throwMessage('failure', `File content cannot be blank in file ${index + 1}`)
+            }
         })
 
         let filesObject: any = {}
-        beforeUpdateFilesState.forEach((value: IEditableFile, i: number) => {
-            if (files[i].deleted)
-                filesObject[value.name] = {content: ""}
-            else
-                filesObject[value.name] = {content: files[i].content, filename: files[i].name}
+        files.forEach((file: IEditableFile, i: number) => {
+            if (file.deleted) {
+                if (i < beforeUpdateFilesState.length)
+                    filesObject[file.name] = {content: ""}
+            }
+            else {
+                if (i < beforeUpdateFilesState.length) {
+                    filesObject[beforeUpdateFilesState[i].name] = {content: file.content, filename: file.name}
+                }
+                else {
+                    filesObject[file.name] = {content: file.content, filename: file.name}
+                }
+            }
         })
 
-        props.wrapper.updateGist(params.id, description, isPublic, filesObject)
+        props.wrapper.updateGist(params.id, description, filesObject)
         .then(response => {
             if (response.status === 200) {
                 props.throwMessage('success', "Gist has been successfully updated")
@@ -96,18 +101,10 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
     }
 
     return (
-        <div className="add-new-gist">
+        <div className="add-new-gist edit">
             <form onSubmit={update}>
                 <div className="header">
                     <input type="text" placeholder="Gist description..." className="description" value={description} onChange={descriptionHandler} />
-                    <span className="private">Private</span>
-                    <div className="switch-button">
-                        <input 
-                            type="checkbox" id="is-public" checked={isPublic} 
-                            onChange={isPublicHandler} 
-                        />
-                        <label htmlFor="is-public"></label>
-                    </div>
                 </div>
 
                 { files.map((file: IEditableFile, i: number) => (

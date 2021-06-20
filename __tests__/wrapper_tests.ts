@@ -57,13 +57,13 @@ describe("Tests for GitHub Gists wrapper", () => {
         })
 
         test("Updating the gist", () => {
-            return wrapper.updateGist(gistID, "update_test", false, files).then(response => {
+            return wrapper.updateGist(gistID, "update_test", files).then(response => {
                 expect(response.status).toEqual(200)
             })
         })
 
         test("Updating a gist with incorrect ID", () => {
-            return wrapper.updateGist("abc", "update_test", false, files).catch(error => {
+            return wrapper.updateGist("abc", "update_test", files).catch(error => {
                 expect(error.response.status).toEqual(404)
             })
         })

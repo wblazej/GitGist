@@ -145,3 +145,7 @@ textarea {
 .add-new-gist .new-file:hover .remove-button {
     opacity: 1;
 }
+
+.add-new-gist.edit .header input[type=text] {
+    width: 100%;
+}
