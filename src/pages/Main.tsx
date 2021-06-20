@@ -64,24 +64,29 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
                 </div>
 
-                <div className="gists">
-                    { gistsList.map((gist: IGist, key: number) => (
-                        <Link to={`/gists/${gist.id}`} className="gist" key={key}>
-                            <h3>{gist.description}</h3>
-                            <span className="gist-info">{gist.files.length} {gist.files.length === 1 ? "file" : "files"}</span>
-                            { !gist.isPublic && <span className="gist-info private">private</span> }
-                            
-                            <div className="files">
-                                { gist.files.map((file: IFile, i: number) => (
-                                    <div className="file" key={i}>
-                                        <LanguagesIcons lang={file.language ? file.language : ""} />
-                                        <span className="filename">{file.name}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        </Link>
-                    ))}
-                </div>
+                { gistsList.length > 0 ?
+                    <div className="gists">
+                        { gistsList.map((gist: IGist, key: number) => (
+                            <Link to={`/gists/${gist.id}`} className="gist" key={key}>
+                                <h3>{gist.description}</h3>
+                                <span className="gist-info">{gist.files.length} {gist.files.length === 1 ? "file" : "files"}</span>
+                                { !gist.isPublic && <span className="gist-info private">private</span> }
+                                
+                                <div className="files">
+                                    { gist.files.map((file: IFile, i: number) => (
+                                        <div className="file" key={i}>
+                                            <LanguagesIcons lang={file.language ? file.language : ""} />
+                                            <span className="filename">{file.name}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            </Link>
+                        ))}
+                    </div>
+                    :
+                    <p className="page-info">404 Page not found</p>
+                }
+                
             </div>
         )
     else return (
