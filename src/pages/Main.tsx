@@ -67,8 +67,8 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     { !gist.isPublic && <span className="gist-info private">private</span> }
                     
                     <div className="files">
-                        { gist.files.map((file: IFile, key: number) => (
-                            <div className="file">
+                        { gist.files.map((file: IFile, i: number) => (
+                            <div className="file" key={i}>
                                 <LanguagesIcons lang={file.language} />
                                 <span className="filename">{file.name}</span>
                             </div>
