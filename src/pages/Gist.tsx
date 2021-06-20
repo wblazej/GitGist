@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
-import gistsWrapper from './../ts/gistsWrapper';
-import './../style/gist.css'
 import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { useParams, Link, useHistory } from "react-router-dom";
+
+import gistsWrapper from './../ts/gistsWrapper';
+import './../style/gist.css'
 import Languages from './../components/Languages';
 import { IGist, IFile } from './../ts/interfaces';
-import { useParams } from "react-router-dom";
 import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
 import EditIcon from './../img/icons/Edit';
-import { useHistory } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 
 
 interface IParams {

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+
 import GistsWrapper from './../ts/gistsWrapper';
 import './../style/addGist.css';
 import { IFile } from './../ts/interfaces';
 import TrashIcon from './../img/icons/Trash';
+
 
 interface IProps {
     wrapper: GistsWrapper

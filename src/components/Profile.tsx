@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 import './../style/profile.css'
 import GitHubLogo from './../img/github_logo.png';
-import { Link } from 'react-router-dom';
+
 
 interface IProps {
     setToken: Function;
@@ -20,23 +22,21 @@ const Profile: React.FunctionComponent<IProps> = (props: IProps) => {
     }
 
     return (
-        <>
-            <div className="profile">
-                <div className="name-container">
-                    <h2>{props.displayName !== "" ? props.displayName : "-"}</h2>
-                    <span className="nickname">{props.login !== "" ? props.login : "-"}</span>
-                </div>
-                <form onSubmit={submitToken}>
-                    <input type="password" placeholder="Token" onChange={tokenHandler} />
-                    <input type="submit" value="Save" />
-                </form>
-
-                <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" className="repo-link">
-                    <img src={GitHubLogo} alt="github_logo" className="logo" />
-                </a>
-                <Link to="/" type="submit" className="main-page-button">Main page</Link>
+        <div className="profile">
+            <div className="name-container">
+                <h2>{props.displayName !== "" ? props.displayName : "-"}</h2>
+                <span className="nickname">{props.login !== "" ? props.login : "-"}</span>
             </div>
-        </>
+            <form onSubmit={submitToken}>
+                <input type="password" placeholder="Token" onChange={tokenHandler} />
+                <input type="submit" value="Save" />
+            </form>
+
+            <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" className="repo-link">
+                <img src={GitHubLogo} alt="github_logo" className="logo" />
+            </a>
+            <Link to="/" type="submit" className="main-page-button">Main page</Link>
+        </div>
     )
 }
 

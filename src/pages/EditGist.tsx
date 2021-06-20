@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+
 import gistWrapper from './../ts/gistsWrapper';
 import { IEditableFile } from './../ts/interfaces';
 import TrashIcon from './../img/icons/Trash';
-import { useParams, useHistory } from "react-router-dom";
+
 
 interface IParams {
     id: string;

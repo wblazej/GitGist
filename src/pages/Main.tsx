@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom'
+
 import GistsWrapper from './../ts/gistsWrapper'
 import { IGist, IFile } from './../ts/interfaces';
-
 import './../style/main.css'
 import LanguagesIcons from './../components/Languages';
 import ArrowIcon from './../img/icons/Arrow';

@@ -1,14 +1,16 @@
-import React, { useState } from 'react';
-import GistsWrapper from './ts/gistsWrapper';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
+import { setCookie, getCookie } from './ts/cookies';
+import { IMessage } from '././/ts/interfaces';
+import GistsWrapper from './ts/gistsWrapper';
 import Profile from './components/Profile';
+
+// pages
 import Main from './pages/Main';
 import AddGist from './pages/AddGist';
-import { IMessage } from '././/ts/interfaces';
 import Gist from './pages/Gist';
 import EditGist from './pages/EditGist';
-import { setCookie, getCookie } from './ts/cookies';
-import { useEffect } from 'react';
 
 const App = () => {
     const [token, setToken] = useState("")
