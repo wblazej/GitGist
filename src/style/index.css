@@ -41,6 +41,7 @@ input {
 
 .content {
     margin-left: 350px;
+    min-height: 100px;
 }
 
 .message {

@@ -26,7 +26,8 @@
     width: 90%;
 }
 
-.profile input[type=submit] {
+.profile input[type=submit],
+.profile .main-page-button {
     text-transform: uppercase;
     padding: .6em 1em;
     border-radius: 10px;
@@ -38,6 +39,7 @@
     font-size: .9rem;
     min-width: 80px;
     margin-top: 1em;
+    text-align: center;
 }
 
 .profile .name-container {
@@ -56,4 +58,12 @@
 
 .profile img.logo {
     height: 28px;
+}
+
+.profile .main-page-button {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -45px;
+    font-size: .8rem;
 }

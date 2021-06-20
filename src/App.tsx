@@ -31,16 +31,18 @@ const App = () => {
         <>
         { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
         <div className="container">
-            <Profile/>
-            <div className="content">
-                <Router>
-                    <Switch>
-                        <Route exact path='/'><Main wrapper={wrapper}/></Route>
-                        <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
-                        <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} /></Route>
-                    </Switch>
-                </Router>
-            </div>
+            <Router>
+                <Profile/>
+                <div className="content">
+                    
+                        <Switch>
+                            <Route exact path='/'><Main wrapper={wrapper}/></Route>
+                            <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
+                            <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} /></Route>
+                        </Switch>
+                    
+                </div>
+            </Router>
         </div>
         </>
     )
