@@ -76,6 +76,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
             <div className="display-gist">
                 <div className="header">
                     <span className="description">{gist.description}</span>
+                    {!gist.isPublic && <span className="private">private</span>}
                     <span className="date">{convertDate(gist.createdAt)}</span>
                     <div className="buttons">
                         <Link to={`/edit/${params.id}`} className="button"><EditIcon/></Link>
