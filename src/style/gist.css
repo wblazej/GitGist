@@ -48,6 +48,8 @@
     text-align: right;
     padding-right: .8em;
     margin: 0;
+    z-index: 1;
+    background-color: var(--theme-color2);
 }
 
 .display-gist .header {
