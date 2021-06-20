@@ -53,8 +53,6 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
             filesObject[value.name] = {content: value.content}
         })
 
-        console.log(filesObject)
-
         props.wrapper.createGist(description, isPublic, filesObject)
         .then(response => {
             if (response.status === 201)

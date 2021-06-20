@@ -43,7 +43,6 @@ const App = () => {
             setLogin(response.data.login)
 
             setCookie('token', token, 1)
-            console.log(response)
         })
         .catch(error => {
             if (error.response.status === 401)
