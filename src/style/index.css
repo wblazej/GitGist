@@ -55,7 +55,7 @@ input {
     font-weight: bold;
     text-transform: uppercase;
     animation: message-animation .3s;
-    z-index: 1;
+    z-index: 2;
 }
 
 .message.success {
