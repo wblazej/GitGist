@@ -19,4 +19,10 @@ export interface IMessage {
     hiding: boolean;
 }
 
+export interface IEditableFile {
+    name: string;
+    content: string;
+    deleted: boolean;
+}
+
 export default {}

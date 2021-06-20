@@ -10,6 +10,7 @@ import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
 import EditIcon from './../img/icons/Edit';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 
 interface IParams {
@@ -77,7 +78,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     <span className="description">{gist.description}</span>
                     <span className="date">{convertDate(gist.createdAt)}</span>
                     <div className="buttons">
-                        <div className="button"><EditIcon/></div>
+                        <Link to={`/edit/${params.id}`} className="button"><EditIcon/></Link>
                         <div className="button" onClick={deleteGist}><TrashIcon/></div>
                     </div>
                 </div>
