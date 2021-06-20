@@ -12,10 +12,12 @@ import PlusIcon from './../img/icons/Plus';
 interface IProps {
     wrapper: GistsWrapper
     tokenIsCorrect: boolean;
+    tokenLoaded: boolean;
 }
 
 const Main: React.FunctionComponent<IProps> = (props: IProps) => {
     const [gistsList, setGistsList] = useState(Array<IGist>())
+    const [loaded, setLoaded] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
@@ -46,6 +48,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     })
 
                     setGistsList(gists)
+                    setLoaded(true)
                 }
             })
         }
@@ -64,7 +67,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
                 </div>
 
-                { gistsList.length > 0 ?
+                { gistsList.length > 0 &&
                     <div className="gists">
                         { gistsList.map((gist: IGist, key: number) => (
                             <Link to={`/gists/${gist.id}`} className="gist" key={key}>
@@ -83,15 +86,17 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                             </Link>
                         ))}
                     </div>
-                    :
+                }
+                { gistsList.length === 0 && loaded && 
                     <p className="page-info">404 Page not found</p>
                 }
                 
             </div>
         )
-    else return (
+    else if (props.tokenLoaded) return (
         <p className="page-info">Set the GitHub API token using the panel on the left to use this gist viewer</p>
     )
+    else return <></>
 }
 
 export default Main;

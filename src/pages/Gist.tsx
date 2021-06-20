@@ -20,6 +20,7 @@ interface IParams {
 interface IProps {
     wrapper: gistsWrapper
     throwMessage: Function;
+    tokenLoaded: boolean;
 }
 
 const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -29,35 +30,37 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     const history = useHistory()
 
     useEffect(() => {
-        props.wrapper.getGist(params.id)
-        .then(response => {
-            if (response.status === 200) {
-                const files: IFile[] = []
-                
-                Object.keys(response.data.files).forEach((key: string) => {
-                    files.push({
-                        name: response.data.files[key].filename,
-                        language: response.data.files[key].language,
-                        content: response.data.files[key].content
+        if (props.tokenLoaded) {
+            props.wrapper.getGist(params.id)
+            .then(response => {
+                if (response.status === 200) {
+                    const files: IFile[] = []
+                    
+                    Object.keys(response.data.files).forEach((key: string) => {
+                        files.push({
+                            name: response.data.files[key].filename,
+                            language: response.data.files[key].language,
+                            content: response.data.files[key].content
+                        })
                     })
-                })
 
-                setGist({
-                    id: params.id,
-                    createdAt: response.data.created_at,
-                    description: response.data.description,
-                    isPublic: response.data.public,
-                    files: files
-                })
-            }
-        })
-        .catch(error => {
-            if (error.response.status === 401)
-                props.throwMessage('failure', "You didn't provide any token or it's incorrect")
-            else if (error.response.status === 404)
-                props.throwMessage('failure', "Gist with this ID doesn't exist")
-        })
-    }, [params.id, props.wrapper])
+                    setGist({
+                        id: params.id,
+                        createdAt: response.data.created_at,
+                        description: response.data.description,
+                        isPublic: response.data.public,
+                        files: files
+                    })
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401)
+                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                else if (error.response.status === 404)
+                    props.throwMessage('failure', "Gist with this ID doesn't exist")
+            })
+        }
+    }, [params.id, props.wrapper, props.tokenLoaded])
 
     const getLinesCounter = (lines: number) => {
         let linesCounter: Array<JSX.Element> = []

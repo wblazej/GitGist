@@ -11,6 +11,7 @@ interface IParams {
 interface IProps {
     wrapper: gistWrapper,
     throwMessage: Function
+    tokenLoaded: boolean;
 }
 
 const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -37,31 +38,33 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
     setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, deleted: true} : item))
 
     useEffect(() => {
-        props.wrapper.getGist(params.id)
-        .then(response => {
-            if (response.status === 200) {
-                const files: IEditableFile[] = []
-                
-                Object.keys(response.data.files).forEach((key: string) => {
-                    files.push({
-                        name: response.data.files[key].filename,
-                        content: response.data.files[key].content,
-                        deleted: false
+        if (props.tokenLoaded) {
+            props.wrapper.getGist(params.id)
+            .then(response => {
+                if (response.status === 200) {
+                    const files: IEditableFile[] = []
+                    
+                    Object.keys(response.data.files).forEach((key: string) => {
+                        files.push({
+                            name: response.data.files[key].filename,
+                            content: response.data.files[key].content,
+                            deleted: false
+                        })
                     })
-                })
 
-                setDescription(response.data.description)
-                setFiles(files)
-                setBeforeUpdateFilesState(files)
-            }
-        })
-        .catch(error => {
-            if (error.response.status === 401)
-                props.throwMessage('failure', "You didn't provide any token or it's incorrect")
-            else if (error.response.status === 404)
-                props.throwMessage('failure', "Gist with this ID doesn't exist")
-        })
-    }, [params.id, props.wrapper])
+                    setDescription(response.data.description)
+                    setFiles(files)
+                    setBeforeUpdateFilesState(files)
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401)
+                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                else if (error.response.status === 404)
+                    props.throwMessage('failure', "Gist with this ID doesn't exist")
+            })
+        }
+    }, [params.id, props.wrapper, props.tokenLoaded])
 
     const update = (Event: React.FormEvent) => {
         Event.preventDefault()

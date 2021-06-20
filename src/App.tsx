@@ -14,6 +14,7 @@ const App = () => {
     const [token, setToken] = useState("")
     const [wrapper, setWrapper] = useState<GistsWrapper>(new GistsWrapper(""))
     const [tokenIsCorrect, setTokenIsCorrect] = useState(false)
+    const [tokenLoaded, setTokenLoaded] = useState(false)
 
     const [displayName, setDisplayName] = useState("")
     const [login, setLogin] = useState("")
@@ -41,6 +42,7 @@ const App = () => {
             setTokenIsCorrect(true)
             setDisplayName(response.data.name)
             setLogin(response.data.login)
+            setTokenLoaded(true)
 
             setCookie('token', token, 1)
         })
@@ -62,12 +64,14 @@ const App = () => {
                 setTokenIsCorrect(true)
                 setDisplayName(response.data.name)
                 setLogin(response.data.login)
+                setTokenLoaded(true)
             })
             .catch(error => {
                 if (error.response.status === 401)
                     setCookie('token', '', -1)
+                setTokenLoaded(true)
             })
-        }   
+        } else setTokenLoaded(true)
     }, [])
 
     return (
@@ -78,10 +82,10 @@ const App = () => {
                 <Profile setToken={setToken} createWrapper={createWrapper} displayName={displayName} login={login} />
                 <div className="content">
                     <Switch>
-                        <Route exact path='/'><Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect}/></Route>
+                        <Route exact path='/'><Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect} tokenLoaded={tokenLoaded}/></Route>
                         <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
-                        <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} /></Route>
-                        <Route exact path='/edit/:id'><EditGist wrapper={wrapper} throwMessage={throwMessage} /></Route>
+                        <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded} /></Route>
+                        <Route exact path='/edit/:id'><EditGist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded} /></Route>
                     </Switch>
                 </div>
             </Router>
