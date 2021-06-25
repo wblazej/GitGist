@@ -1,6 +1,14 @@
-# GitGist
-Semester final project from JavaScript on WSIZ.
+---
 
+<p align="center">
+  <b>Semester final project from JavaScript on WSIZ</b><br><br>
+  <img src="https://www.wsi.edu.pl/wp-content/uploads/2019/05/Niebieski-logotyp_new.png">
+</p>
+
+----
+
+
+# GitGist
 This project uses Gist GitHub API. The main idea of this project is to create an own GitHub gists viewer. Learn more in [GitHub API Documentation]( https://docs.github.com/en/rest/reference/gists)
 
 ![image](https://user-images.githubusercontent.com/62674438/122681958-1edf2580-d1f7-11eb-9282-0ca84a47908a.png)
