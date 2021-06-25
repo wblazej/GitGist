@@ -37,7 +37,7 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
         setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, content: value} : item))
 
     const removeFile = (i: number) =>
-    setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, deleted: true} : item))
+        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, deleted: true} : item))
 
     useEffect(() => {
         if (props.tokenLoaded) {
@@ -93,12 +93,10 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
                     filesObject[file.name] = {content: ""}
             }
             else {
-                if (i < beforeUpdateFilesState.length) {
+                if (i < beforeUpdateFilesState.length)
                     filesObject[beforeUpdateFilesState[i].name] = {content: file.content, filename: file.name}
-                }
-                else {
+                else
                     filesObject[file.name] = {content: file.content, filename: file.name}
-                }
             }
         })
 
