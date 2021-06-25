@@ -36,7 +36,9 @@ const App = () => {
         }, expire - 300)
     }
 
-    const createWrapper = () => {
+    const createWrapper = (Event: React.FormEvent) => {
+        Event.preventDefault()
+
         const wrapper = new GistsWrapper(token)
         wrapper.validate()
         .then(response => {
@@ -47,6 +49,8 @@ const App = () => {
             setTokenLoaded(true)
 
             setCookie('token', token, 1)
+
+            throwMessage('success', "Token is correct")
         })
         .catch(error => {
             if (error.response.status === 401)
@@ -67,6 +71,7 @@ const App = () => {
                 setDisplayName(response.data.name)
                 setLogin(response.data.login)
                 setTokenLoaded(true)
+                setToken(tkn ? tkn : "")
             })
             .catch(error => {
                 if (error.response.status === 401)
@@ -78,20 +83,38 @@ const App = () => {
 
     return (
         <>
-        { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
-        <div className="container">
-            <Router>
-                <Profile setToken={setToken} createWrapper={createWrapper} displayName={displayName} login={login} />
-                <div className="content">
-                    <Switch>
-                        <Route exact path='/'><Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect} tokenLoaded={tokenLoaded}/></Route>
-                        <Route exact path='/add'><AddGist wrapper={wrapper} throwMessage={throwMessage}/></Route>
-                        <Route exact path='/gists/:id'><Gist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded} /></Route>
-                        <Route exact path='/edit/:id'><EditGist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded} /></Route>
-                    </Switch>
-                </div>
-            </Router>
-        </div>
+            { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
+            <div className="container">
+                <Router>
+                    <Profile 
+                        setToken={setToken} 
+                        token={token} 
+                        createWrapper={createWrapper} 
+                        displayName={displayName} 
+                        login={login}
+                    />
+                    
+                    <div className="content">
+                        <Switch>
+                            <Route exact path='/'>
+                                <Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect} tokenLoaded={tokenLoaded}/>
+                            </Route>
+
+                            <Route exact path='/add'>
+                                <AddGist wrapper={wrapper} throwMessage={throwMessage}/>
+                            </Route>
+
+                            <Route exact path='/gists/:id'>
+                                <Gist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded}/>
+                            </Route>
+
+                            <Route exact path='/edit/:id'>
+                                <EditGist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded}/>
+                            </Route>
+                        </Switch>
+                    </div>
+                </Router>
+            </div>
         </>
     )
 }
