@@ -85,7 +85,7 @@ const App = () => {
         <>
             { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
             <div className="container">
-                <Router>
+                <Router basename={process.env.PUBLIC_URL}>
                     <Profile 
                         setToken={setToken} 
                         token={token} 
