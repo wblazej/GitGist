@@ -25,7 +25,8 @@ class GistsWrapper {
             params: {
                 since: since,
                 per_page: perPage,
-                page: page
+                page: page,
+                timestamp: new Date().getTime()
             }
         })
         
