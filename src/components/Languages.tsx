@@ -6,6 +6,7 @@ import JavaScriptIcon from './../img/langIcons/JavaScript';
 import HTMLIcon from './../img/langIcons/HTML';
 import CSSIcon from './../img/langIcons/CSS';
 import TypeScriptIcon from './../img/langIcons/TypeScript';
+import JavaIcon from './../img/langIcons/Java';
 
 interface IProps {
     lang: string;
@@ -23,6 +24,8 @@ const Languages: React.FunctionComponent<IProps> = (props: IProps) => {
             return <CSSIcon/>
         case "TypeScript":
             return <TypeScriptIcon/>
+        case "Java":
+            return <JavaIcon/>
         default:
             return <DefaultIcon/>
     }
