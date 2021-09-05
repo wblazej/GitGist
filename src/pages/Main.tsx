@@ -7,12 +7,11 @@ import './../style/main.css'
 import LanguagesIcons from './../components/Languages';
 import ArrowIcon from './../img/icons/Arrow';
 import PlusIcon from './../img/icons/Plus';
+import NoneTokenInfo from './../components/NoneTokenInfo';
 
 
 interface IProps {
-    wrapper: GistsWrapper
-    tokenIsCorrect: boolean;
-    tokenLoaded: boolean;
+    wrapper: GistsWrapper | undefined;
 }
 
 const Main: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -21,7 +20,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
     const [currentPage, setCurrentPage] = useState(1)
 
     useEffect(() => {
-        if (props.tokenIsCorrect) {
+        if (props.wrapper) {
             props.wrapper.getGists(null, 10, currentPage)
             .then(response => {
                 if (response.status === 200) {
@@ -52,12 +51,12 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                 }
             })
         }
-    }, [props.wrapper, currentPage, props.tokenIsCorrect])
+    }, [props.wrapper, currentPage])
 
     const nextPage = () => setCurrentPage(currentPage + 1)
     const prevoiusPage = () => setCurrentPage(currentPage - 1 > 0 ? currentPage - 1 : 1)
 
-    if (props.tokenIsCorrect)
+    if (props.wrapper)
         return (
             <div className="gists-container">
                 <div className="buttons-panel">
@@ -93,10 +92,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                 
             </div>
         )
-    else if (props.tokenLoaded) return (
-        <p className="page-info">Set the GitHub API token using the panel on the left to use this gist viewer</p>
-    )
-    else return <></>
+    else return <NoneTokenInfo/>
 }
 
 export default Main;

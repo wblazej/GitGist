@@ -10,6 +10,7 @@ import { IGist, IFile } from './../ts/interfaces';
 import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
 import EditIcon from './../img/icons/Edit';
+import NoneTokenInfo from './../components/NoneTokenInfo';
 
 
 interface IParams {
@@ -17,9 +18,8 @@ interface IParams {
 }
 
 interface IProps {
-    wrapper: gistsWrapper
+    wrapper: gistsWrapper | undefined;
     throwMessage: Function;
-    tokenLoaded: boolean;
 }
 
 const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -29,7 +29,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     const history = useHistory()
 
     useEffect(() => {
-        if (props.tokenLoaded) {
+        if (props.wrapper) {
             props.wrapper.getGist(params.id)
             .then(response => {
                 if (response.status === 200) {
@@ -59,7 +59,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     props.throwMessage('failure', "Gist with this ID doesn't exist")
             })
         }
-    }, [params.id, props.wrapper, props.tokenLoaded])
+    }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const getLinesCounter = (lines: number) => {
         let linesCounter: Array<JSX.Element> = []
@@ -70,16 +70,18 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     }
 
     const deleteGist = () => {
-        props.wrapper.deleteGist(params.id)
-        .then(response => {
-            if (response.status === 204) {
-                props.throwMessage('success', "Gist has been successfully deleted")
-                history.push('/')
-            }
-        })
+        if (props.wrapper) {
+            props.wrapper.deleteGist(params.id)
+            .then(response => {
+                if (response.status === 204) {
+                    props.throwMessage('success', "Gist has been successfully deleted")
+                    history.push('/')
+                }
+            })
+        }
     }
     
-    if (gist) {
+    if (gist)
         return (
             <div className="display-gist">
                 <div className="header">
@@ -108,7 +110,8 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                 ))}
             </div>
         )
-    }
+    else if (props.wrapper === undefined)
+        return <NoneTokenInfo/>
     else return <></>
 }
 

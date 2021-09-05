@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { setCookie, getCookie } from './ts/cookies';
 import { IMessage } from '././/ts/interfaces';
 import GistsWrapper from './ts/gistsWrapper';
 import Profile from './components/Profile';
@@ -13,10 +12,8 @@ import Gist from './pages/Gist';
 import EditGist from './pages/EditGist';
 
 const App = () => {
-    const [token, setToken] = useState("")
-    const [wrapper, setWrapper] = useState<GistsWrapper>(new GistsWrapper(""))
-    const [tokenIsCorrect, setTokenIsCorrect] = useState(false)
-    const [tokenLoaded, setTokenLoaded] = useState(false)
+    const [token, setToken] = useState<string | null>(null)
+    const [wrapper, setWrapper] = useState<GistsWrapper>()
 
     const [displayName, setDisplayName] = useState("")
     const [login, setLogin] = useState("")
@@ -36,19 +33,15 @@ const App = () => {
         }, expire - 300)
     }
 
-    const createWrapper = (Event: React.FormEvent) => {
-        Event.preventDefault()
-
-        const wrapper = new GistsWrapper(token)
+    const createWrapper = (authToken: string) => {
+        const wrapper = new GistsWrapper(authToken)
         wrapper.validate()
         .then(response => {
             setWrapper(wrapper)
-            setTokenIsCorrect(true)
             setDisplayName(response.data.name)
             setLogin(response.data.login)
-            setTokenLoaded(true)
 
-            setCookie('token', token, 1)
+            localStorage.setItem("token", authToken)
 
             throwMessage('success', "Token is correct")
         })
@@ -61,24 +54,21 @@ const App = () => {
     }
 
     useEffect(() => {
-        let tkn = getCookie('token')
-        if (tkn) {
-            const wrapper = new GistsWrapper(tkn)
+        let tokenFromStorage = localStorage.getItem("token")
+        if (tokenFromStorage) {
+            const wrapper = new GistsWrapper(tokenFromStorage)
             wrapper.validate()
             .then(response => {
                 setWrapper(wrapper)
-                setTokenIsCorrect(true)
                 setDisplayName(response.data.name)
                 setLogin(response.data.login)
-                setTokenLoaded(true)
-                setToken(tkn ? tkn : "")
+                setToken(tokenFromStorage)
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    setCookie('token', '', -1)
-                setTokenLoaded(true)
+                    localStorage.removeItem("token")
             })
-        } else setTokenLoaded(true)
+        }
     }, [])
 
     return (
@@ -87,7 +77,6 @@ const App = () => {
             <div className="container">
                 <Router basename={process.env.PUBLIC_URL}>
                     <Profile 
-                        setToken={setToken} 
                         token={token} 
                         createWrapper={createWrapper} 
                         displayName={displayName} 
@@ -97,7 +86,7 @@ const App = () => {
                     <div className="content">
                         <Switch>
                             <Route exact path='/'>
-                                <Main wrapper={wrapper} tokenIsCorrect={tokenIsCorrect} tokenLoaded={tokenLoaded}/>
+                                <Main wrapper={wrapper} />
                             </Route>
 
                             <Route exact path='/add'>
@@ -105,11 +94,11 @@ const App = () => {
                             </Route>
 
                             <Route exact path='/gists/:id'>
-                                <Gist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded}/>
+                                <Gist wrapper={wrapper} throwMessage={throwMessage} />
                             </Route>
 
                             <Route exact path='/edit/:id'>
-                                <EditGist wrapper={wrapper} throwMessage={throwMessage} tokenLoaded={tokenLoaded}/>
+                                <EditGist wrapper={wrapper} throwMessage={throwMessage} />
                             </Route>
                         </Switch>
                     </div>
