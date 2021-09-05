@@ -18,10 +18,11 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
     const [gistsList, setGistsList] = useState(Array<IGist>())
     const [loaded, setLoaded] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
+    const [since, setSince] = useState<string | undefined>()
 
     useEffect(() => {
         if (props.wrapper) {
-            props.wrapper.getGists(null, 10, currentPage)
+            props.wrapper.getGists(since ? new Date(since) : null, 10, currentPage)
             .then(response => {
                 if (response.status === 200) {
                     const gists: IGist[] = []
@@ -51,7 +52,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                 }
             })
         }
-    }, [props.wrapper, currentPage])
+    }, [props.wrapper, currentPage, since])
 
     const nextPage = () => setCurrentPage(currentPage + 1)
     const prevoiusPage = () => setCurrentPage(currentPage - 1 > 0 ? currentPage - 1 : 1)
@@ -63,6 +64,13 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     <div className="button left-arrow" title="Previous page" onClick={prevoiusPage}><ArrowIcon/></div>
                     <div className="button" title="Current page">{currentPage}</div>
                     <div className="button" title="Next page" onClick={nextPage}><ArrowIcon/></div>
+                    <div className="date-input-box">
+                        <input 
+                            type="date" value={since} 
+                            onChange={(Event: React.FormEvent<HTMLInputElement>) => 
+                                setSince(Event.currentTarget.value)} 
+                        />
+                    </div>
                     <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
                 </div>
 

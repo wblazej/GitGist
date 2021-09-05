@@ -92,3 +92,21 @@
     overflow-y: auto;
     padding-right: .5em;
 }
+
+.date-input-box {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: .5em;
+    
+}
+input[type=date] {
+    background-color: var(--main-color);
+    border: none;
+    outline: none;
+    color: var(--font-color);
+    font-size: 1rem;
+    padding: .5em 1em;
+    border-radius: 1em;
+    text-align: center;
+}
