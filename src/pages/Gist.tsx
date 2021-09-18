@@ -28,6 +28,8 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     const params = useParams<IParams>()
     const history = useHistory()
 
+    const [starText, setStarText] = useState("Star")
+
     useEffect(() => {
         if (props.wrapper) {
             props.wrapper.getGist(params.id)
@@ -58,6 +60,12 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                 else if (error.response.status === 404)
                     props.throwMessage('failure', "Gist with this ID doesn't exist")
             })
+
+            props.wrapper.checkStarred(params.id)
+            .then(response => {
+                if (response.status === 204)
+                    setStarText("Unstar")
+            })
         }
     }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -77,6 +85,43 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     props.throwMessage('success', "Gist has been successfully deleted")
                     history.push('/')
                 }
+            })
+        }
+    }
+
+    const starGist = () => {
+        if (props.wrapper) {
+            props.wrapper.starGist(params.id)
+            .then(response => {
+                if (response.status === 204) {
+                    props.throwMessage('success', "Star has been added")
+                    setStarText("Unstar")
+                }
+            })
+        }
+    }
+
+    const removeStar = () => {
+        if (props.wrapper) {
+            props.wrapper.unstarGist(params.id)
+            .then(response => {
+                if (response.status === 204) {
+                    props.throwMessage('success', "Unstarred successfully")
+                    setStarText("Star")
+                }
+            })
+        }
+    }
+
+    const changeStar = () => {
+        if (props.wrapper) {
+            props.wrapper.checkStarred(params.id)
+            .then(response => {
+                if (response.status === 204)
+                    removeStar()
+            })
+            .catch(response => {
+                starGist()
             })
         }
     }
@@ -108,6 +153,8 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                         </SyntaxHighlighter>
                     </div>
                 ))}
+
+                <button onClick={changeStar}>{starText}</button>
             </div>
         )
     else if (props.wrapper === undefined)

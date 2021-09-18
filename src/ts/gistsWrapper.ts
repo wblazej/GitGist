@@ -45,6 +45,10 @@ class GistsWrapper {
             description: description,
             files: files
         })
+
+    starGist = (gistId: string) => this.client.put(`/gists/${gistId}/star`)
+    unstarGist = (gistId: string) => this.client.delete(`/gists/${gistId}/star`)
+    checkStarred = (gistId: string) => this.client.get(`/gists/${gistId}/star`)
 }
 
 export default GistsWrapper;

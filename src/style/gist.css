@@ -115,3 +115,19 @@
     margin-right: 1em;
     margin-top: .1em;
 }
+
+.display-gist button {
+    outline: none;
+    background-color: var(--main-color);
+    border-radius: 1em;
+    margin-right: .5em;
+    cursor: pointer;
+    border: none;
+    font-size: .9rem;
+    padding: .7em 0;
+    width: 100px;
+    display: block;
+    text-align: center;
+    margin-bottom: .5em;
+    color: var(--font-color);
+}
