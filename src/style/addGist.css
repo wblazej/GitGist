@@ -4,7 +4,7 @@ input[type=text] {
     padding: .5em 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     width: 250px;
 }
 
@@ -16,7 +16,7 @@ textarea {
     padding: 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     resize: vertical;
     min-height: 200px;
     font-family: 'Source Code Pro', monospace;
@@ -117,7 +117,7 @@ textarea {
 .add-new-gist input[type=submit] {
     outline: none;
     background-color: var(--main-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     margin-right: .5em;
     cursor: pointer;
     font-weight: bold;

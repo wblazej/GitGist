@@ -5,8 +5,6 @@ import GistsWrapper from './../ts/gistsWrapper'
 import { IGist, IFile } from './../ts/interfaces';
 import './../style/main.css'
 import LanguagesIcons from './../components/Languages';
-import ArrowIcon from './../img/icons/Arrow';
-import PlusIcon from './../img/icons/Plus';
 import NoneTokenInfo from './../components/NoneTokenInfo';
 
 
@@ -18,11 +16,10 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
     const [gistsList, setGistsList] = useState(Array<IGist>())
     const [loaded, setLoaded] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [since, setSince] = useState<string | undefined>()
 
     useEffect(() => {
         if (props.wrapper) {
-            props.wrapper.getGists(since ? new Date(since) : null, 10, currentPage)
+            props.wrapper.getGists(10, currentPage)
             .then(response => {
                 if (response.status === 200) {
                     const gists: IGist[] = []
@@ -52,7 +49,7 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                 }
             })
         }
-    }, [props.wrapper, currentPage, since])
+    }, [props.wrapper, currentPage])
 
     const nextPage = () => setCurrentPage(currentPage + 1)
     const prevoiusPage = () => setCurrentPage(currentPage - 1 > 0 ? currentPage - 1 : 1)
@@ -61,17 +58,9 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
         return (
             <div className="gists-container">
                 <div className="buttons-panel">
-                    <div className="button left-arrow" title="Previous page" onClick={prevoiusPage}><ArrowIcon/></div>
-                    <div className="button" title="Current page">{currentPage}</div>
-                    <div className="button" title="Next page" onClick={nextPage}><ArrowIcon/></div>
-                    <div className="date-input-box">
-                        <input 
-                            type="date" value={since} 
-                            onChange={(Event: React.FormEvent<HTMLInputElement>) => 
-                                setSince(Event.currentTarget.value)} 
-                        />
-                    </div>
-                    <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
+                    <div className="button" title="Previous page" onClick={prevoiusPage}><i className="fa-solid fa-arrow-left"></i></div>
+                    <div className="page" title="Current page">{currentPage}</div>
+                    <div className="button" title="Next page" onClick={nextPage}><i className="fa-solid fa-arrow-right"></i></div>
                 </div>
 
                 { gistsList.length > 0 &&

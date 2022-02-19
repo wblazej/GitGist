@@ -5,6 +5,7 @@ import gistWrapper from './../ts/gistsWrapper';
 import { IEditableFile } from './../ts/interfaces';
 import TrashIcon from './../img/icons/Trash';
 import NoneTokenInfo from './../components/NoneTokenInfo';
+import toast from "react-hot-toast";
 
 
 interface IParams {
@@ -13,7 +14,6 @@ interface IParams {
 
 interface IProps {
     wrapper: gistWrapper | undefined;
-    throwMessage: Function;
 }
 
 const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -61,9 +61,9 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                    toast.error("You didn't provide any token or it's incorrect")
                 else if (error.response.status === 404)
-                    props.throwMessage('failure', "Gist with this ID doesn't exist")
+                    toast.error("Gist with this ID doesn't exist")
             })
         }
     }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -73,17 +73,17 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
         
         if (props.wrapper) {
             if (description.length === 0)
-                return props.throwMessage("failure", "Description cannot be blank")
+                return toast.error("Description cannot be blank")
 
             if (files.filter((file: IEditableFile) => !file.deleted).length === 0)
-                return props.throwMessage('failure', "Add at least one file")
+                return toast.error("Add at least one file")
 
             files.forEach((value: IEditableFile, index: number) => {
                 if (!value.deleted) {
                     if (value.name.length === 0)
-                        return props.throwMessage('failure', `Filename cannot be blank in file ${index + 1}`)
+                        return toast.error(`Filename cannot be blank in file ${index + 1}`)
                     if (value.content.length === 0)
-                        return props.throwMessage('failure', `File content cannot be blank in file ${index + 1}`)
+                        return toast.error(`File content cannot be blank in file ${index + 1}`)
                 }
             })
 
@@ -104,13 +104,13 @@ const EditGist: React.FunctionComponent<IProps> = (props: IProps) => {
             props.wrapper.updateGist(params.id, description, filesObject)
             .then(response => {
                 if (response.status === 200) {
-                    props.throwMessage('success', "Gist has been successfully updated")
+                    toast.success("Gist has been successfully updated")
                     history.push(`/gists/${params.id}`)
                 }
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                    toast.error("You didn't provide any token or it's incorrect")
             })
         }
     }

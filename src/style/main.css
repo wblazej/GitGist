@@ -1,5 +1,5 @@
 .gist {
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     padding: 1em 1.5em;
     display: block;
@@ -25,7 +25,7 @@
 .gist .file svg {
     width: 25px;
     height: 25px;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     padding: .5em;
     vertical-align: middle;
@@ -45,52 +45,44 @@
     color: var(--font-color);
     font-weight: bold;
     background-color: var(--main-color);
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     padding: .5em .7em;
 }
 
-.gist .gist-info.private {
-    background: transparent;
-    border: 2px solid var(--main-color);
-}
-
 .buttons-panel {
-    border-radius: 1em;
-    border: 1px solid var(--border-color);
-    padding: 1em;
     margin-bottom: 1em;
-    background: var(--theme-color2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .buttons-panel .button {
+    width: 1em;
+    aspect-ratio: 1/1;
+    display: block;
+    font-size: 1rem;
+    padding: .5em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: .2em;
+    border-radius: var(--border-radius);
     background-color: var(--main-color);
-    border-radius: 10px;
-    padding: .2em;
-    margin-right: .5em;
-    cursor: pointer;
-    width: 30px;
-    height: 30px;
-    display:inline-flex;
-    justify-content:center;
-    align-items:center;
-    vertical-align: middle;
+}
+
+.buttons-panel .page {
     font-size: 1.3rem;
-    font-weight: bold;
+    margin-left: .5em;
+    margin-right: .5em;
 }
 
 .buttons-panel .button svg {
-    height: 20px;
-    width: 20px;
+    height: 100%;
+    width: 100%;
 }
 
 .buttons-panel .left-arrow svg {
     transform: rotate(180deg);
-}
-
-.gists {
-    height: 80vh;
-    overflow-y: auto;
-    padding-right: .5em;
 }
 
 .date-input-box {
@@ -98,15 +90,4 @@
     justify-content: center;
     align-items: center;
     margin-right: .5em;
-    
-}
-input[type=date] {
-    background-color: var(--main-color);
-    border: none;
-    outline: none;
-    color: var(--font-color);
-    font-size: 1rem;
-    padding: .5em 1em;
-    border-radius: 1em;
-    text-align: center;
 }

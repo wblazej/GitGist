@@ -5,11 +5,11 @@ import './../style/addGist.css';
 import { IFile } from './../ts/interfaces';
 import TrashIcon from './../img/icons/Trash';
 import NoneTokenInfo from './../components/NoneTokenInfo';
+import toast from 'react-hot-toast';
 
 
 interface IProps {
     wrapper: GistsWrapper | undefined;
-    throwMessage: Function;
 }
 
 const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -40,16 +40,16 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
         
         if (props.wrapper) {
             if (description.length === 0)
-                return props.throwMessage("failure", "Description cannot be blank")
+                return toast.error("Description cannot be blank")
 
             if (files.length === 0)
-                return props.throwMessage('failure', "Add at least one file")
+                return toast.error("Add at least one file")
 
             files.forEach((value: IFile, index: number) => {
                 if (value.name.length === 0)
-                    return props.throwMessage('failure', `Filename cannot be blank in file ${index + 1}`)
+                    return toast.error(`Filename cannot be blank in file ${index + 1}`)
                 if (value.content.length === 0)
-                    return props.throwMessage('failure', `File content cannot be blank in file ${index + 1}`)
+                    return toast.error(`File content cannot be blank in file ${index + 1}`)
             })
 
             let filesObject: any = {}
@@ -60,14 +60,14 @@ const AddGist: React.FunctionComponent<IProps> = (props: IProps) => {
             props.wrapper.createGist(description, isPublic, filesObject)
             .then(response => {
                 if (response.status === 201)
-                    props.throwMessage('success', "Gist has been successfully created")
+                    toast.success("Gist has been successfully created")
                 setDescription("")
                 setIsPublic(false)
                 setFiles([])
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                    toast.error("You didn't provide any token or it's incorrect")
             })
         }
     }

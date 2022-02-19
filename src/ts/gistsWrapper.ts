@@ -20,10 +20,9 @@ class GistsWrapper {
 
     getGist = (gistID: string) => this.client.get(`/gists/${gistID}`)
 
-    getGists = (since: Date | null = null, perPage: number = 10, page: number = 1) =>
+    getGists = (perPage: number = 10, page: number = 1) =>
         this.client.get('/gists', {
             params: {
-                since: since,
                 per_page: perPage,
                 page: page,
                 timestamp: new Date().getTime()

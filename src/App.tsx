@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
-import { IMessage } from '././/ts/interfaces';
+
 import GistsWrapper from './ts/gistsWrapper';
 import Profile from './components/Profile';
 
@@ -18,21 +19,6 @@ const App = () => {
     const [displayName, setDisplayName] = useState("")
     const [login, setLogin] = useState("")
 
-    const [message, setMessage] = useState<IMessage>({content: '', status: '', shown: false, hiding: false})
-
-    const throwMessage = (status: string, content: string, expire: number = 3000) => {
-        if (message.shown) return
-
-        setMessage({content: content, status: status, shown: true, hiding: false})
-
-        setTimeout(() => {
-            setMessage((message: IMessage) => ({...message, hiding: true}))
-            setTimeout(() => {
-                setMessage({status: "", content: "", shown: false, hiding: false})
-            }, 300)
-        }, expire - 300)
-    }
-
     const createWrapper = (authToken: string) => {
         const wrapper = new GistsWrapper(authToken)
         wrapper.validate()
@@ -43,13 +29,13 @@ const App = () => {
 
             localStorage.setItem("token", authToken)
 
-            throwMessage('success', "Token is correct")
+            toast.success("Saved token")
         })
         .catch(error => {
             if (error.response.status === 401)
-                throwMessage('failure', "Token is incorrect")
+                toast.error("Token is incorrect")
             else if (error.response.status === 403)
-                throwMessage('failure', "API rate limit exceeded for this user")
+                toast.error("API rate limit exceeded for this user")
         })
     }
 
@@ -72,39 +58,36 @@ const App = () => {
     }, [])
 
     return (
-        <>
-            { message.shown && <div className={message.hiding ? `message hiding ${message.status}` : `message ${message.status}`}>{message.content}</div> }
-            <div className="container">
-                <Router basename={process.env.PUBLIC_URL}>
-                    <Profile 
-                        token={token} 
-                        createWrapper={createWrapper} 
-                        displayName={displayName} 
-                        login={login}
-                    />
-                    
-                    <div className="content">
-                        <Switch>
-                            <Route exact path='/'>
-                                <Main wrapper={wrapper} />
-                            </Route>
+        <div className="app">
+            <Router>
+                <Profile 
+                    token={token} 
+                    createWrapper={createWrapper} 
+                    displayName={displayName} 
+                    login={login}
+                />
+                
+                <div className="content">
+                    <Switch>
+                        <Route exact path='/'>
+                            <Main wrapper={wrapper} />
+                        </Route>
 
-                            <Route exact path='/add'>
-                                <AddGist wrapper={wrapper} throwMessage={throwMessage}/>
-                            </Route>
+                        <Route exact path='/add'>
+                            <AddGist wrapper={wrapper} />
+                        </Route>
 
-                            <Route exact path='/gists/:id'>
-                                <Gist wrapper={wrapper} throwMessage={throwMessage} />
-                            </Route>
+                        <Route exact path='/gists/:id'>
+                            <Gist wrapper={wrapper} />
+                        </Route>
 
-                            <Route exact path='/edit/:id'>
-                                <EditGist wrapper={wrapper} throwMessage={throwMessage} />
-                            </Route>
-                        </Switch>
-                    </div>
-                </Router>
-            </div>
-        </>
+                        <Route exact path='/edit/:id'>
+                            <EditGist wrapper={wrapper} />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+        </div>
     )
 }
 

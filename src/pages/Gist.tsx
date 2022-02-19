@@ -11,6 +11,7 @@ import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
 import EditIcon from './../img/icons/Edit';
 import NoneTokenInfo from './../components/NoneTokenInfo';
+import toast from "react-hot-toast";
 
 
 interface IParams {
@@ -19,7 +20,6 @@ interface IParams {
 
 interface IProps {
     wrapper: gistsWrapper | undefined;
-    throwMessage: Function;
 }
 
 const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
@@ -54,9 +54,9 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                    toast.error("You didn't provide any token or it's incorrect")
                 else if (error.response.status === 404)
-                    props.throwMessage('failure', "Gist with this ID doesn't exist")
+                    toast.error("Gist with this ID doesn't exist")
             })
         }
     }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
@@ -74,7 +74,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
             props.wrapper.deleteGist(params.id)
             .then(response => {
                 if (response.status === 204) {
-                    props.throwMessage('success', "Gist has been successfully deleted")
+                    toast.success("Gist has been successfully deleted")
                     history.push('/')
                 }
             })

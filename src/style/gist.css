@@ -1,6 +1,6 @@
 .display-gist .code-block {
     border: 1px solid var(--border-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     overflow: hidden;
     background-color: var(--theme-color2);
     position: relative;
@@ -54,7 +54,7 @@
 
 .display-gist .header {
     padding: 1em;
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
     background-color: var(--theme-color2);
     margin-bottom: 1em;
@@ -108,7 +108,7 @@
     vertical-align: middle;
     color: var(--font-color);
     font-weight: bold;
-    border-radius: 10px;
+    border-radius: var(--border-radius);
     padding: .5em .7em;
     background: transparent;
     border: 2px solid var(--main-color);
