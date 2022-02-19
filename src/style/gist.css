@@ -8,8 +8,6 @@
 }
 
 .display-gist .code-block pre {
-    -webkit-filter: invert(100%);
-    filter: invert(100%);
     padding: 1em !important;
     font-size: .9rem;
     font-family: 'Source Code Pro', monospace;

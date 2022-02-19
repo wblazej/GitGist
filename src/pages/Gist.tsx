@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs2015 as theme } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useParams, Link, useHistory } from "react-router-dom";
 
 import gistsWrapper from './../ts/gistsWrapper';
@@ -103,7 +103,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                         <div className="lines-counter">
                             {getLinesCounter((file.content.match(/\n/g) || []).length + 1)}
                         </div>
-                        <SyntaxHighlighter language={file.language ? file.language.toLowerCase() : ""} style={docco}>
+                        <SyntaxHighlighter language={file.language ? file.language.toLowerCase() : ""} style={theme}>
                             {file.content}
                         </SyntaxHighlighter>
                     </div>
