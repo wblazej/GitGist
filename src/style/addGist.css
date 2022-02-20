@@ -1,27 +1,27 @@
-input[type=text] {
+input[type="text"] {
     outline: none;
-    background: var(--theme-color2);
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     width: 250px;
+    background: transparent;
 }
 
 textarea {
     width: 100%;
     display: block;
     outline: none;
-    background: var(--theme-color2);
     padding: 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
-    border-radius: 1em;
+    border-radius: var(--border-radius);
     resize: vertical;
     min-height: 200px;
-    font-family: 'Source Code Pro', monospace;
+    font-family: "Source Code Pro", monospace;
     color: var(--font-color);
-    font-size: .9rem;
+    font-size: 0.9rem;
+    background: transparent;
 }
 
 .add-new-gist .description {
@@ -43,16 +43,16 @@ textarea {
 
 .add-new-gist .code-sign {
     text-transform: uppercase;
-    font-size: .9rem;
+    font-size: 0.9rem;
     font-weight: bold;
-    margin-left: .5em;
-    color: var(--theme-color3);
-    margin-top: .5em;
+    margin-left: 0.5em;
+    color: var(--theme-color2);
+    margin-top: 0.5em;
     display: inline-block;
 }
 
 .add-new-gist .settings {
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 .add-new-gist .settings * {
@@ -62,18 +62,18 @@ textarea {
 
 .add-new-gist .private {
     text-transform: uppercase;
-    font-size: .7rem;
-    color: var(--theme-color3);
+    font-size: 0.7rem;
+    color: var(2);
     font-weight: bold;
     margin-left: 2em;
 }
 
-.add-new-gist .switch-button input[type=checkbox] {
+.add-new-gist .switch-button input[type="checkbox"] {
     display: none;
 }
 
 .add-new-gist .switch-button {
-    margin-left: .5em;
+    margin-left: 0.5em;
 }
 
 .add-new-gist .switch-button label {
@@ -84,12 +84,11 @@ textarea {
     display: block;
     position: relative;
     cursor: pointer;
-    background-color: var(--theme-color2);
-    transition: background-color .3s;
+    transition: background-color 0.3s;
 }
 
-.add-new-gist .switch-button label::after{
-    content: '';
+.add-new-gist .switch-button label::after {
+    content: "";
     position: absolute;
     width: 19px;
     height: 19px;
@@ -97,15 +96,15 @@ textarea {
     border-radius: 50%;
     top: 3px;
     left: 3px;
-    transition: left .3s;
+    transition: left 0.3s;
 }
 
-.add-new-gist .switch-button input[type=checkbox]:checked ~ label::after {
+.add-new-gist .switch-button input[type="checkbox"]:checked ~ label::after {
     left: 28px;
-    opacity: .5;
+    opacity: 0.5;
 }
 
-.add-new-gist .switch-button input[type=checkbox]:checked ~ label {
+.add-new-gist .switch-button input[type="checkbox"]:checked ~ label {
     background-color: transparent;
 }
 
@@ -114,38 +113,34 @@ textarea {
 }
 
 .add-new-gist .buttons div,
-.add-new-gist input[type=submit] {
+.add-new-gist input[type="submit"] {
     outline: none;
     background-color: var(--main-color);
-    border-radius: 1em;
-    margin-right: .5em;
+    border-radius: var(--border-radius);
+    margin-right: 0.5em;
     cursor: pointer;
     font-weight: bold;
     border: none;
-    font-size: .9rem;
-    padding: .7em 0;
+    font-size: 0.9rem;
+    padding: 0.7em 0;
     width: 100px;
     display: block;
     text-align: center;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 .add-new-gist .new-file .remove-button {
-    margin-left: .5em;
+    margin-left: 0.5em;
     cursor: pointer;
     opacity: 0;
-    transition: opacity .2s;
-}
-
-.add-new-gist .new-file .remove-button svg {
-    width: 30px;
-    height: 30px;
+    transition: opacity 0.2s;
+    font-size: 1.3rem;
 }
 
 .add-new-gist .new-file:hover .remove-button {
     opacity: 1;
 }
 
-.add-new-gist.edit .header input[type=text] {
+.add-new-gist.edit .header input[type="text"] {
     width: 100%;
 }

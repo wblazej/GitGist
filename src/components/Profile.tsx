@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
 import './../style/profile.css'
-import GitHubLogo from './../img/github_logo.png';
 
 
 interface IProps {
     createWrapper: Function;
     token: string | null;
-
     displayName: string;
     login: string;
 }
@@ -32,19 +29,27 @@ const Profile: React.FunctionComponent<IProps> = (props: IProps) => {
                 <h2>{props.displayName !== "" ? props.displayName : "-"}</h2>
                 <span className="nickname">{props.login !== "" ? props.login : "-"}</span>
             </div>
+
             <form onSubmit={submitTokenForm}>
-                <input 
-                    type="password" placeholder="Token" 
-                    onChange={(Event: React.FormEvent<HTMLInputElement>) => setAuthToken(Event.currentTarget.value)} 
+                <input
+                    type="password" placeholder="Token"
+                    onChange={(event: React.FormEvent<HTMLInputElement>) => setAuthToken(event.currentTarget.value)}
                     value={authToken}
                 />
                 <input type="submit" value="Save" />
             </form>
 
-            <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" className="repo-link">
-                <img src={GitHubLogo} alt="github_logo" className="logo" />
-            </a>
-            <Link to="/" type="submit" className="main-page-button">Main page</Link>
+            <div className="buttons">
+                <Link to="/" type="submit"><i className="fa-solid fa-house"></i></Link>
+
+                <Link to="/add" className="button" title="Add new gist">
+                    <i className="fa-solid fa-plus"></i>
+                </Link>
+
+                <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" >
+                    <i className="fa-brands fa-github"></i>
+                </a>
+            </div>
         </div>
     )
 }

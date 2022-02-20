@@ -5,31 +5,21 @@ import GistsWrapper from './../ts/gistsWrapper'
 import { IGist, IFile } from './../ts/interfaces';
 import './../style/main.css'
 import LanguagesIcons from './../components/Languages';
-import ArrowIcon from './../img/icons/Arrow';
-import PlusIcon from './../img/icons/Plus';
-import NoneTokenInfo from './../components/NoneTokenInfo';
 
-
-interface IProps {
-    wrapper: GistsWrapper | undefined;
-}
-
-const Main: React.FunctionComponent<IProps> = (props: IProps) => {
+const Main: React.FC<{ wrapper: GistsWrapper }> = ({ wrapper }) => {
     const [gistsList, setGistsList] = useState(Array<IGist>())
     const [loaded, setLoaded] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [since, setSince] = useState<string | undefined>()
 
     useEffect(() => {
-        if (props.wrapper) {
-            props.wrapper.getGists(since ? new Date(since) : null, 10, currentPage)
+        wrapper.getGists(3, currentPage)
             .then(response => {
                 if (response.status === 200) {
                     const gists: IGist[] = []
 
                     response.data.forEach((data: any) => {
                         const files: IFile[] = []
-                        
+
                         Object.keys(data.files).forEach((key: string) => {
                             files.push({
                                 name: data.files[key].filename,
@@ -51,56 +41,47 @@ const Main: React.FunctionComponent<IProps> = (props: IProps) => {
                     setLoaded(true)
                 }
             })
-        }
-    }, [props.wrapper, currentPage, since])
+    }, [wrapper, currentPage])
 
-    const nextPage = () => setCurrentPage(currentPage + 1)
-    const prevoiusPage = () => setCurrentPage(currentPage - 1 > 0 ? currentPage - 1 : 1)
-
-    if (props.wrapper)
-        return (
-            <div className="gists-container">
-                <div className="buttons-panel">
-                    <div className="button left-arrow" title="Previous page" onClick={prevoiusPage}><ArrowIcon/></div>
-                    <div className="button" title="Current page">{currentPage}</div>
-                    <div className="button" title="Next page" onClick={nextPage}><ArrowIcon/></div>
-                    <div className="date-input-box">
-                        <input 
-                            type="date" value={since} 
-                            onChange={(Event: React.FormEvent<HTMLInputElement>) => 
-                                setSince(Event.currentTarget.value)} 
-                        />
-                    </div>
-                    <Link to="/add" className="button" title="Add new gist"><PlusIcon/></Link>
+    return (
+        <div className="gists-container">
+            <div className="buttons-panel">
+                <div className="button" title="Previous page"
+                    onClick={() => setCurrentPage(currentPage => currentPage !== 1 ? currentPage - 1 : 1)}>
+                    <i className="fa-solid fa-arrow-left"></i>
                 </div>
-
-                { gistsList.length > 0 &&
-                    <div className="gists">
-                        { gistsList.map((gist: IGist, key: number) => (
-                            <Link to={`/gists/${gist.id}`} className="gist" key={key}>
-                                <h3>{gist.description}</h3>
-                                <span className="gist-info">{gist.files.length} {gist.files.length === 1 ? "file" : "files"}</span>
-                                { !gist.isPublic && <span className="gist-info private">private</span> }
-                                
-                                <div className="files">
-                                    { gist.files.map((file: IFile, i: number) => (
-                                        <div className="file" key={i}>
-                                            <LanguagesIcons lang={file.language ? file.language : ""} />
-                                            <span className="filename">{file.name}</span>
-                                        </div>
-                                    ))}
-                                </div>
-                            </Link>
-                        ))}
-                    </div>
-                }
-                { gistsList.length === 0 && loaded && 
-                    <p className="page-info">404 Page not found</p>
-                }
-                
+                <div className="page" title="Current page">{currentPage}</div>
+                <div className="button" title="Next page"
+                    onClick={() => setCurrentPage(currentPage => currentPage + 1)}>
+                    <i className="fa-solid fa-arrow-right"></i>
+                </div>
             </div>
-        )
-    else return <NoneTokenInfo/>
+
+            {gistsList.length > 0 &&
+                <div className="gists">
+                    {gistsList.map((gist: IGist, key: number) => (
+                        <Link to={`/gists/${gist.id}`} className="gist" key={key}>
+                            <h3>{gist.description}</h3>
+                            <span className="gist-info">{gist.files.length} {gist.files.length === 1 ? "file" : "files"}</span>
+                            {!gist.isPublic && <span className="gist-info private">private</span>}
+
+                            <div className="files">
+                                {gist.files.map((file: IFile, i: number) => (
+                                    <div className="file" key={i}>
+                                        <LanguagesIcons lang={file.language ? file.language : ""} />
+                                        <span className="filename">{file.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        </Link>
+                    ))}
+                </div>
+            }
+            {gistsList.length === 0 && loaded &&
+                <p className="page-info">No more gists</p>
+            }
+        </div>
+    )
 }
 
 export default Main;

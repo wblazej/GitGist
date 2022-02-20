@@ -1,33 +1,29 @@
 import React from 'react';
 
-import DefaultIcon from './../img/langIcons/Default';
-import PythonIcon from './../img/langIcons/Python';
-import JavaScriptIcon from './../img/langIcons/JavaScript';
-import HTMLIcon from './../img/langIcons/HTML';
-import CSSIcon from './../img/langIcons/CSS';
-import TypeScriptIcon from './../img/langIcons/TypeScript';
-import JavaIcon from './../img/langIcons/Java';
+import DefaultIcon from './langIcons/Default';
+import PythonIcon from './langIcons/Python';
+import JavaScriptIcon from './langIcons/JavaScript';
+import HTMLIcon from './langIcons/HTML';
+import CSSIcon from './langIcons/CSS';
+import TypeScriptIcon from './langIcons/TypeScript';
+import JavaIcon from './langIcons/Java';
 
-interface IProps {
-    lang: string;
-}
-
-const Languages: React.FunctionComponent<IProps> = (props: IProps) => {
-    switch(props.lang) {
+const Languages: React.FunctionComponent<{ lang: string }> = ({ lang }) => {
+    switch (lang) {
         case "Python":
-            return <PythonIcon/>
+            return <PythonIcon />
         case "JavaScript":
-            return <JavaScriptIcon/>
+            return <JavaScriptIcon />
         case "HTML":
-            return <HTMLIcon/>
+            return <HTMLIcon />
         case "CSS":
-            return <CSSIcon/>
+            return <CSSIcon />
         case "TypeScript":
-            return <TypeScriptIcon/>
+            return <TypeScriptIcon />
         case "Java":
-            return <JavaIcon/>
+            return <JavaIcon />
         default:
-            return <DefaultIcon/>
+            return <DefaultIcon />
     }
 }
 

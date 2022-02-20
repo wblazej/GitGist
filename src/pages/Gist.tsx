@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
-import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { vs2015 as theme } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useParams, Link, useHistory } from "react-router-dom";
 
 import gistsWrapper from './../ts/gistsWrapper';
@@ -8,33 +8,21 @@ import './../style/gist.css'
 import Languages from './../components/Languages';
 import { IGist, IFile } from './../ts/interfaces';
 import convertDate from './../ts/convertDate';
-import TrashIcon from './../img/icons/Trash';
-import EditIcon from './../img/icons/Edit';
-import NoneTokenInfo from './../components/NoneTokenInfo';
+import toast from "react-hot-toast";
 
 
-interface IParams {
-    id: string;
-}
-
-interface IProps {
-    wrapper: gistsWrapper | undefined;
-    throwMessage: Function;
-}
-
-const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
+const Gist: React.FC<{ wrapper: gistsWrapper }> = ({ wrapper }) => {
     const [gist, setGist] = useState<IGist>()
 
-    const params = useParams<IParams>()
+    const { id: gistID } = useParams<{ id: string }>()
     const history = useHistory()
 
     useEffect(() => {
-        if (props.wrapper) {
-            props.wrapper.getGist(params.id)
+        wrapper.getGist(gistID)
             .then(response => {
                 if (response.status === 200) {
                     const files: IFile[] = []
-                    
+
                     Object.keys(response.data.files).forEach((key: string) => {
                         files.push({
                             name: response.data.files[key].filename,
@@ -44,7 +32,7 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     })
 
                     setGist({
-                        id: params.id,
+                        id: gistID,
                         createdAt: response.data.created_at,
                         description: response.data.description,
                         isPublic: response.data.public,
@@ -54,12 +42,11 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
             })
             .catch(error => {
                 if (error.response.status === 401)
-                    props.throwMessage('failure', "You didn't provide any token or it's incorrect")
+                    toast.error("You didn't provide any token or it's incorrect")
                 else if (error.response.status === 404)
-                    props.throwMessage('failure', "Gist with this ID doesn't exist")
+                    toast.error("Gist with this ID doesn't exist")
             })
-        }
-    }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
+    }, [gistID, wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const getLinesCounter = (lines: number) => {
         let linesCounter: Array<JSX.Element> = []
@@ -70,17 +57,15 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     }
 
     const deleteGist = () => {
-        if (props.wrapper) {
-            props.wrapper.deleteGist(params.id)
+        wrapper.deleteGist(gistID)
             .then(response => {
                 if (response.status === 204) {
-                    props.throwMessage('success', "Gist has been successfully deleted")
+                    toast.success("Gist has been successfully deleted")
                     history.push('/')
                 }
             })
-        }
     }
-    
+
     if (gist)
         return (
             <div className="display-gist">
@@ -89,12 +74,17 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     {!gist.isPublic && <span className="private">private</span>}
                     <span className="date">{convertDate(gist.createdAt)}</span>
                     <div className="buttons">
-                        <Link to={`/edit/${params.id}`} className="button"><EditIcon/></Link>
-                        <div className="button" onClick={deleteGist}><TrashIcon/></div>
+                        <Link to={`/edit/${gistID}`} className="button">
+                            <i className="fa-solid fa-pen-to-square"></i>
+                        </Link>
+
+                        <div className="button" onClick={deleteGist}>
+                            <i className="fa-solid fa-trash"></i>
+                        </div>
                     </div>
                 </div>
 
-                { gist.files.map((file: IFile, i: number) => (
+                {gist.files.map((file: IFile, i: number) => (
                     <div className="code-block" key={i}>
                         <div className="file-header">
                             <Languages lang={file.language ? file.language : ""} />
@@ -103,15 +93,13 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                         <div className="lines-counter">
                             {getLinesCounter((file.content.match(/\n/g) || []).length + 1)}
                         </div>
-                        <SyntaxHighlighter language={file.language ? file.language.toLowerCase() : ""} style={docco}>
+                        <SyntaxHighlighter language={file.language ? file.language.toLowerCase() : ""} style={theme}>
                             {file.content}
                         </SyntaxHighlighter>
                     </div>
                 ))}
             </div>
         )
-    else if (props.wrapper === undefined)
-        return <NoneTokenInfo/>
     else return <></>
 }
 
