@@ -3,7 +3,6 @@ import { useParams, useHistory } from "react-router-dom";
 
 import gistWrapper from './../ts/gistsWrapper';
 import { IEditableFile } from './../ts/interfaces';
-import TrashIcon from './../img/icons/Trash';
 import toast from "react-hot-toast";
 
 const EditGist: React.FC<{wrapper: gistWrapper}> = ({wrapper}) => {

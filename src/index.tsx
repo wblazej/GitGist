@@ -8,7 +8,11 @@ import { Toaster } from 'react-hot-toast';
 ReactDOM.render(
     <React.StrictMode>
         <App />
-        <Toaster position='bottom-center' />
+        <Toaster position='bottom-center' toastOptions={{
+            style: {
+                
+            }
+        }} />
     </React.StrictMode>,
     document.getElementById('root')
 );

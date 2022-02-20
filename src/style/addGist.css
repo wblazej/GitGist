@@ -1,18 +1,17 @@
 input[type=text] {
     outline: none;
-    background: var(--theme-color2);
     padding: .5em 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     width: 250px;
+    background: transparent;
 }
 
 textarea {
     width: 100%;
     display: block;
     outline: none;
-    background: var(--theme-color2);
     padding: 1em;
     font-size: 1.1rem;
     border: 1px solid var(--border-color);
@@ -22,6 +21,7 @@ textarea {
     font-family: 'Source Code Pro', monospace;
     color: var(--font-color);
     font-size: .9rem;
+    background: transparent;
 }
 
 .add-new-gist .description {
@@ -46,7 +46,7 @@ textarea {
     font-size: .9rem;
     font-weight: bold;
     margin-left: .5em;
-    color: var(--theme-color3);
+    color: var(--theme-color2);
     margin-top: .5em;
     display: inline-block;
 }
@@ -63,7 +63,7 @@ textarea {
 .add-new-gist .private {
     text-transform: uppercase;
     font-size: .7rem;
-    color: var(--theme-color3);
+    color: var(2);
     font-weight: bold;
     margin-left: 2em;
 }
@@ -84,7 +84,6 @@ textarea {
     display: block;
     position: relative;
     cursor: pointer;
-    background-color: var(--theme-color2);
     transition: background-color .3s;
 }
 

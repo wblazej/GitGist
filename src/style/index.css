@@ -6,10 +6,7 @@ html {
     --font-color: #fff;
     --border-color: #464c55;
     --main-color: #347ab4;
-    --theme-color2: #23272d;
-    --theme-color3: #8b8b8b;
-    --red: #E04343;
-    --green: #19a046;
+    --theme-color2: #8b8b8b;
     --border-radius: 5px;
 }
 
@@ -44,51 +41,8 @@ input {
     min-height: 100px;
 }
 
-.message {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    padding: 1em;
-    font-size: 1rem;
-    text-align: center;
-    font-weight: bold;
-    text-transform: uppercase;
-    animation: message-animation .3s;
-    z-index: 2;
-}
-
-.message.success {
-    background-color: var(--green);
-}
-
-.message.failure {
-    background-color: var(--red);
-}
-
-.message.hiding {
-    animation: hiding-message-animation .4s;
-}
-
-@keyframes message-animation {
-    0% { transform: translateY(100px); }
-    100% { transform: translateY(0px); }
-}
-
-@keyframes hiding-message-animation {
-    0% { transform: translateY(0px); }
-    100% { transform: translateY(100px); }
-}
-
-
 p.page-info {
     font-size: 1.1rem;
     text-align: center;
     padding-top: 1em;
-}
-
-@keyframes token-information-after-animation {
-    0% { width: 100px; }
-    50% { width: 150px; }
-    100% { width: 100px; }
 }

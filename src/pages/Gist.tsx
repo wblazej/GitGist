@@ -8,8 +8,6 @@ import './../style/gist.css'
 import Languages from './../components/Languages';
 import { IGist, IFile } from './../ts/interfaces';
 import convertDate from './../ts/convertDate';
-import TrashIcon from './../img/icons/Trash';
-import EditIcon from './../img/icons/Edit';
 import toast from "react-hot-toast";
 
 
