@@ -78,22 +78,16 @@
     margin: auto;
     margin-left: auto;
     margin-right: 0;
-    display: block;
-    opacity: 0;
-    transition: opacity .2s;
+    display: flex;
 }
 
-.display-gist .header .buttons * {
-    display: inline-block;
-    vertical-align: middle;
-}
-
-.display-gist .header .buttons .button svg {
-    width: 25px;
-    height: 25px;
+.display-gist .header .buttons .button {
+    width: 1em;
+    aspect-ratio: 1/1;
     cursor: pointer;
     margin-left: .3em;
     margin-right: .3em;
+    font-size: 1.3rem;
 }
 
 .display-gist .header:hover .buttons {

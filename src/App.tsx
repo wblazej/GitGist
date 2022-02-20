@@ -67,25 +67,27 @@ const App = () => {
                     login={login}
                 />
                 
-                <div className="content">
-                    <Switch>
-                        <Route exact path='/'>
-                            <Main wrapper={wrapper} />
-                        </Route>
+                {wrapper &&
+                    <div className="content">
+                        <Switch>
+                            <Route exact path='/'>
+                                <Main wrapper={wrapper} />
+                            </Route>
 
-                        <Route exact path='/add'>
-                            <AddGist wrapper={wrapper} />
-                        </Route>
+                            <Route exact path='/add'>
+                                <AddGist wrapper={wrapper} />
+                            </Route>
 
-                        <Route exact path='/gists/:id'>
-                            <Gist wrapper={wrapper} />
-                        </Route>
+                            <Route exact path='/gists/:id'>
+                                <Gist wrapper={wrapper} />
+                            </Route>
 
-                        <Route exact path='/edit/:id'>
-                            <EditGist wrapper={wrapper} />
-                        </Route>
-                    </Switch>
-                </div>
+                            <Route exact path='/edit/:id'>
+                                <EditGist wrapper={wrapper} />
+                            </Route>
+                        </Switch>
+                    </div>
+                }
             </Router>
         </div>
     )

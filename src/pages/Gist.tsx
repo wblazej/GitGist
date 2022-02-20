@@ -10,56 +10,45 @@ import { IGist, IFile } from './../ts/interfaces';
 import convertDate from './../ts/convertDate';
 import TrashIcon from './../img/icons/Trash';
 import EditIcon from './../img/icons/Edit';
-import NoneTokenInfo from './../components/NoneTokenInfo';
 import toast from "react-hot-toast";
 
 
-interface IParams {
-    id: string;
-}
-
-interface IProps {
-    wrapper: gistsWrapper | undefined;
-}
-
-const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
+const Gist: React.FC<{wrapper: gistsWrapper}> = ({wrapper}) => {
     const [gist, setGist] = useState<IGist>()
 
-    const params = useParams<IParams>()
+    const {id: gistID} = useParams<{id: string}>()
     const history = useHistory()
 
     useEffect(() => {
-        if (props.wrapper) {
-            props.wrapper.getGist(params.id)
-            .then(response => {
-                if (response.status === 200) {
-                    const files: IFile[] = []
-                    
-                    Object.keys(response.data.files).forEach((key: string) => {
-                        files.push({
-                            name: response.data.files[key].filename,
-                            language: response.data.files[key].language,
-                            content: response.data.files[key].content
-                        })
+        wrapper.getGist(gistID)
+        .then(response => {
+            if (response.status === 200) {
+                const files: IFile[] = []
+                
+                Object.keys(response.data.files).forEach((key: string) => {
+                    files.push({
+                        name: response.data.files[key].filename,
+                        language: response.data.files[key].language,
+                        content: response.data.files[key].content
                     })
+                })
 
-                    setGist({
-                        id: params.id,
-                        createdAt: response.data.created_at,
-                        description: response.data.description,
-                        isPublic: response.data.public,
-                        files: files
-                    })
-                }
-            })
-            .catch(error => {
-                if (error.response.status === 401)
-                    toast.error("You didn't provide any token or it's incorrect")
-                else if (error.response.status === 404)
-                    toast.error("Gist with this ID doesn't exist")
-            })
-        }
-    }, [params.id, props.wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
+                setGist({
+                    id: gistID,
+                    createdAt: response.data.created_at,
+                    description: response.data.description,
+                    isPublic: response.data.public,
+                    files: files
+                })
+            }
+        })
+        .catch(error => {
+            if (error.response.status === 401)
+                toast.error("You didn't provide any token or it's incorrect")
+            else if (error.response.status === 404)
+                toast.error("Gist with this ID doesn't exist")
+        })
+    }, [gistID, wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const getLinesCounter = (lines: number) => {
         let linesCounter: Array<JSX.Element> = []
@@ -70,15 +59,13 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
     }
 
     const deleteGist = () => {
-        if (props.wrapper) {
-            props.wrapper.deleteGist(params.id)
-            .then(response => {
-                if (response.status === 204) {
-                    toast.success("Gist has been successfully deleted")
-                    history.push('/')
-                }
-            })
-        }
+        wrapper.deleteGist(gistID)
+        .then(response => {
+            if (response.status === 204) {
+                toast.success("Gist has been successfully deleted")
+                history.push('/')
+            }
+        })
     }
     
     if (gist)
@@ -89,8 +76,8 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                     {!gist.isPublic && <span className="private">private</span>}
                     <span className="date">{convertDate(gist.createdAt)}</span>
                     <div className="buttons">
-                        <Link to={`/edit/${params.id}`} className="button"><EditIcon/></Link>
-                        <div className="button" onClick={deleteGist}><TrashIcon/></div>
+                        <Link to={`/edit/${gistID}`} className="button"><i className="fa-solid fa-pen-to-square"></i></Link>
+                        <div className="button" onClick={deleteGist}><i className="fa-solid fa-trash"></i></div>
                     </div>
                 </div>
 
@@ -110,8 +97,6 @@ const Gist: React.FunctionComponent<IProps> = (props: IProps) => {
                 ))}
             </div>
         )
-    else if (props.wrapper === undefined)
-        return <NoneTokenInfo/>
     else return <></>
 }
 

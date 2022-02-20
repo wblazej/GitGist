@@ -135,11 +135,7 @@ textarea {
     cursor: pointer;
     opacity: 0;
     transition: opacity .2s;
-}
-
-.add-new-gist .new-file .remove-button svg {
-    width: 30px;
-    height: 30px;
+    font-size: 1.3rem;
 }
 
 .add-new-gist .new-file:hover .remove-button {

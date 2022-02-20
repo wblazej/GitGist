@@ -85,19 +85,6 @@ p.page-info {
     font-size: 1.1rem;
     text-align: center;
     padding-top: 1em;
-    position: relative;
-}
-
-p.page-info::after {
-    position: absolute;
-    width: 100px;
-    height: 2px;
-    background-color: var(--red);
-    content: '';
-    left: 50%;
-    transform: translateX(-50%);
-    bottom: -20px;
-    animation: token-information-after-animation 2s infinite;
 }
 
 @keyframes token-information-after-animation {
