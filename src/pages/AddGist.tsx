@@ -5,7 +5,7 @@ import './../style/addGist.css';
 import { IFile } from './../ts/interfaces';
 import toast from 'react-hot-toast';
 
-const AddGist: React.FC<{wrapper: GistsWrapper}> = ({wrapper}) => {
+const AddGist: React.FC<{ wrapper: GistsWrapper }> = ({ wrapper }) => {
     const [files, setFiles] = useState(Array<IFile>())
     const [description, setDescription] = useState("")
     const [isPublic, setIsPublic] = useState(false)
@@ -17,20 +17,20 @@ const AddGist: React.FC<{wrapper: GistsWrapper}> = ({wrapper}) => {
         setIsPublic(Event.currentTarget.checked)
 
     const addFile = () =>
-        setFiles(files => [...files].concat({name: "", content: "", language: null}))
+        setFiles(files => [...files].concat({ name: "", content: "", language: null }))
 
     const filenameHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: IFile, index: number) => index === i ? {...item, name: value} : item))
+        setFiles(files => files.map((item: IFile, index: number) => index === i ? { ...item, name: value } : item))
 
     const contentHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: IFile, index: number) => index === i ? {...item, content: value} : item))
+        setFiles(files => files.map((item: IFile, index: number) => index === i ? { ...item, content: value } : item))
 
     const removeFile = (i: number) =>
         setFiles(files => files.filter((value: IFile, index: number) => index !== i))
 
     const create = (Event: React.FormEvent) => {
         Event.preventDefault()
-        
+
         if (description.length === 0)
             return toast.error("Description cannot be blank")
 
@@ -46,21 +46,21 @@ const AddGist: React.FC<{wrapper: GistsWrapper}> = ({wrapper}) => {
 
         let filesObject: any = {}
         files.forEach((value: IFile) => {
-            filesObject[value.name] = {content: value.content}
+            filesObject[value.name] = { content: value.content }
         })
 
         wrapper.createGist(description, isPublic, filesObject)
-        .then(response => {
-            if (response.status === 201)
-                toast.success("Gist has been successfully created")
-            setDescription("")
-            setIsPublic(false)
-            setFiles([])
-        })
-        .catch(error => {
-            if (error.response.status === 401)
-                toast.error("You didn't provide any token or it's incorrect")
-        })
+            .then(response => {
+                if (response.status === 201)
+                    toast.success("Gist has been successfully created")
+                setDescription("")
+                setIsPublic(false)
+                setFiles([])
+            })
+            .catch(error => {
+                if (error.response.status === 401)
+                    toast.error("You didn't provide any token or it's incorrect")
+            })
     }
 
     return (
@@ -70,31 +70,31 @@ const AddGist: React.FC<{wrapper: GistsWrapper}> = ({wrapper}) => {
                     <input type="text" placeholder="Gist description..." className="description" value={description} onChange={descriptionHandler} />
                     <span className="private">Private</span>
                     <div className="switch-button">
-                        <input 
-                            type="checkbox" id="is-public" checked={isPublic} 
-                            onChange={isPublicHandler} 
+                        <input
+                            type="checkbox" id="is-public" checked={isPublic}
+                            onChange={isPublicHandler}
                         />
                         <label htmlFor="is-public"></label>
                     </div>
                 </div>
 
-                { files.map((file: IFile, i: number) => (
+                {files.map((file: IFile, i: number) => (
                     <div className="new-file" key={i}>
                         <div className="settings">
-                            <input 
-                                type="text" placeholder="File name" value={file.name} 
-                                onChange={(Event: React.FormEvent<HTMLInputElement>) => filenameHandler(Event.currentTarget.value, i)} 
+                            <input
+                                type="text" placeholder="File name" value={file.name}
+                                onChange={(Event: React.FormEvent<HTMLInputElement>) => filenameHandler(Event.currentTarget.value, i)}
                             />
                             <div className="remove-button" onClick={() => removeFile(i)}><i className="fa-solid fa-trash"></i></div>
                         </div>
-                        <textarea 
-                            value={file.content} 
+                        <textarea
+                            value={file.content}
                             onChange={(Event: React.FormEvent<HTMLTextAreaElement>) => contentHandler(Event.currentTarget.value, i)}>
                         </textarea>
                         <span className="code-sign">code</span>
                     </div>
                 ))}
-                
+
 
                 <div className="buttons">
                     <div className="add-button" onClick={addFile}>Add file</div>

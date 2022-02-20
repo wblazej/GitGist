@@ -15,27 +15,27 @@
     margin-bottom: 2em;
 }
 
-.profile input[type=password] {
+.profile input[type="password"] {
     font-size: 1.1rem;
     border-radius: var(--border-radius);
     outline: none;
     border: 1px solid var(--border-color);
-    padding: .5em;
+    padding: 0.5em;
     background: transparent;
     width: 90%;
 }
 
-.profile input[type=submit],
+.profile input[type="submit"],
 .profile .main-page-button {
     text-transform: uppercase;
-    padding: .6em 1em;
+    padding: 0.6em 1em;
     border-radius: var(--border-radius);
     font-weight: bold;
     background-color: var(--main-color);
     outline: none;
     border: none;
     cursor: pointer;
-    font-size: .9rem;
+    font-size: 0.9rem;
     min-width: 80px;
     margin-top: 1em;
     text-align: center;
@@ -58,11 +58,11 @@
     aspect-ratio: 1/1;
     display: block;
     font-size: 1.3rem;
-    padding: .5em;
+    padding: 0.5em;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: .2em;
+    margin: 0.2em;
     border-radius: var(--border-radius);
     background-color: var(--main-color);
 }

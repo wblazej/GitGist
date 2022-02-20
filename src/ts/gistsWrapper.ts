@@ -28,7 +28,6 @@ class GistsWrapper {
                 timestamp: new Date().getTime()
             }
         })
-        
 
     createGist = (description: string, isPublic: boolean, files: object) =>
         this.client.post('/gists', {

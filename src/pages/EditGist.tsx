@@ -5,8 +5,8 @@ import gistWrapper from './../ts/gistsWrapper';
 import { IEditableFile } from './../ts/interfaces';
 import toast from "react-hot-toast";
 
-const EditGist: React.FC<{wrapper: gistWrapper}> = ({wrapper}) => {
-    const {id: gistID} = useParams<{id: string}>()
+const EditGist: React.FC<{ wrapper: gistWrapper }> = ({ wrapper }) => {
+    const { id: gistID } = useParams<{ id: string }>()
     const history = useHistory()
 
     const [beforeUpdateFilesState, setBeforeUpdateFilesState] = useState(Array<IEditableFile>())
@@ -17,47 +17,47 @@ const EditGist: React.FC<{wrapper: gistWrapper}> = ({wrapper}) => {
         setDescription(Event.currentTarget.value)
 
     const addFile = () =>
-        setFiles(files => [...files].concat({name: "", content: "", deleted: false}))
+        setFiles(files => [...files].concat({ name: "", content: "", deleted: false }))
 
     const filenameHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, name: value} : item))
+        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? { ...item, name: value } : item))
 
     const contentHandler = (value: string, i: number) =>
-        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, content: value} : item))
+        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? { ...item, content: value } : item))
 
     const removeFile = (i: number) =>
-        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? {...item, deleted: true} : item))
+        setFiles(files => files.map((item: IEditableFile, index: number) => index === i ? { ...item, deleted: true } : item))
 
     useEffect(() => {
         wrapper.getGist(gistID)
-        .then(response => {
-            if (response.status === 200) {
-                const files: IEditableFile[] = []
-                
-                Object.keys(response.data.files).forEach((key: string) => {
-                    files.push({
-                        name: response.data.files[key].filename,
-                        content: response.data.files[key].content,
-                        deleted: false
-                    })
-                })
+            .then(response => {
+                if (response.status === 200) {
+                    const files: IEditableFile[] = []
 
-                setDescription(response.data.description)
-                setFiles(files)
-                setBeforeUpdateFilesState(files)
-            }
-        })
-        .catch(error => {
-            if (error.response.status === 401)
-                toast.error("You didn't provide any token or it's incorrect")
-            else if (error.response.status === 404)
-                toast.error("Gist with this ID doesn't exist")
-        })
+                    Object.keys(response.data.files).forEach((key: string) => {
+                        files.push({
+                            name: response.data.files[key].filename,
+                            content: response.data.files[key].content,
+                            deleted: false
+                        })
+                    })
+
+                    setDescription(response.data.description)
+                    setFiles(files)
+                    setBeforeUpdateFilesState(files)
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401)
+                    toast.error("You didn't provide any token or it's incorrect")
+                else if (error.response.status === 404)
+                    toast.error("Gist with this ID doesn't exist")
+            })
     }, [gistID, wrapper]) // eslint-disable-line react-hooks/exhaustive-deps
 
     const update = (Event: React.FormEvent) => {
         Event.preventDefault()
-        
+
         if (description.length === 0)
             return toast.error("Description cannot be blank")
 
@@ -77,50 +77,60 @@ const EditGist: React.FC<{wrapper: gistWrapper}> = ({wrapper}) => {
         files.forEach((file: IEditableFile, i: number) => {
             if (file.deleted) {
                 if (i < beforeUpdateFilesState.length)
-                    filesObject[file.name] = {content: ""}
+                    filesObject[file.name] = { content: "" }
             }
             else {
                 if (i < beforeUpdateFilesState.length)
-                    filesObject[beforeUpdateFilesState[i].name] = {content: file.content, filename: file.name}
+                    filesObject[beforeUpdateFilesState[i].name] = { content: file.content, filename: file.name }
                 else
-                    filesObject[file.name] = {content: file.content, filename: file.name}
+                    filesObject[file.name] = { content: file.content, filename: file.name }
             }
         })
 
         wrapper.updateGist(gistID, description, filesObject)
-        .then(response => {
-            if (response.status === 200) {
-                toast.success("Gist has been successfully updated")
-                history.push(`/gists/${gistID}`)
-            }
-        })
-        .catch(error => {
-            if (error.response.status === 401)
-                toast.error("You didn't provide any token or it's incorrect")
-        })
+            .then(response => {
+                if (response.status === 200) {
+                    toast.success("Gist has been successfully updated")
+                    history.push(`/gists/${gistID}`)
+                }
+            })
+            .catch(error => {
+                if (error.response.status === 401)
+                    toast.error("You didn't provide any token or it's incorrect")
+            })
     }
 
     return (
         <div className="add-new-gist edit">
             <form onSubmit={update}>
                 <div className="header">
-                    <input type="text" placeholder="Gist description..." className="description" value={description} onChange={descriptionHandler} />
+                    <input
+                        type="text" placeholder="Gist description..."
+                        className="description" value={description}
+                        onChange={descriptionHandler}
+                    />
                 </div>
 
-                { files.map((file: IEditableFile, i: number) => (
+                {files.map((file: IEditableFile, i: number) => (
                     <div className="new-file" key={i}>
-                        { !file.deleted &&
+                        {!file.deleted &&
                             <>
                                 <div className="settings">
-                                    <input 
-                                        type="text" placeholder="File name" value={file.name} 
-                                        onChange={(Event: React.FormEvent<HTMLInputElement>) => filenameHandler(Event.currentTarget.value, i)} 
+                                    <input
+                                        type="text" placeholder="File name" value={file.name}
+                                        onChange={(Event: React.FormEvent<HTMLInputElement>) =>
+                                            filenameHandler(Event.currentTarget.value, i)
+                                        }
                                     />
-                                    <div className="remove-button" onClick={() => removeFile(i)}><i className="fa-solid fa-trash"></i></div>
+                                    <div className="remove-button" onClick={() => removeFile(i)}>
+                                        <i className="fa-solid fa-trash"></i>
+                                    </div>
                                 </div>
-                                <textarea 
-                                    value={file.content} 
-                                    onChange={(Event: React.FormEvent<HTMLTextAreaElement>) => contentHandler(Event.currentTarget.value, i)}>
+                                <textarea
+                                    value={file.content}
+                                    onChange={(Event: React.FormEvent<HTMLTextAreaElement>) =>
+                                        contentHandler(Event.currentTarget.value, i)
+                                    }>
                                 </textarea>
                                 <span className="code-sign">code</span>
                             </>

@@ -8,26 +8,22 @@ import CSSIcon from './langIcons/CSS';
 import TypeScriptIcon from './langIcons/TypeScript';
 import JavaIcon from './langIcons/Java';
 
-interface IProps {
-    lang: string;
-}
-
-const Languages: React.FunctionComponent<IProps> = (props: IProps) => {
-    switch(props.lang) {
+const Languages: React.FunctionComponent<{ lang: string }> = ({ lang }) => {
+    switch (lang) {
         case "Python":
-            return <PythonIcon/>
+            return <PythonIcon />
         case "JavaScript":
-            return <JavaScriptIcon/>
+            return <JavaScriptIcon />
         case "HTML":
-            return <HTMLIcon/>
+            return <HTMLIcon />
         case "CSS":
-            return <CSSIcon/>
+            return <CSSIcon />
         case "TypeScript":
-            return <TypeScriptIcon/>
+            return <TypeScriptIcon />
         case "Java":
-            return <JavaIcon/>
+            return <JavaIcon />
         default:
-            return <DefaultIcon/>
+            return <DefaultIcon />
     }
 }
 

@@ -31,9 +31,9 @@ const Profile: React.FunctionComponent<IProps> = (props: IProps) => {
             </div>
 
             <form onSubmit={submitTokenForm}>
-                <input 
-                    type="password" placeholder="Token" 
-                    onChange={(event: React.FormEvent<HTMLInputElement>) => setAuthToken(event.currentTarget.value)} 
+                <input
+                    type="password" placeholder="Token"
+                    onChange={(event: React.FormEvent<HTMLInputElement>) => setAuthToken(event.currentTarget.value)}
                     value={authToken}
                 />
                 <input type="submit" value="Save" />
@@ -41,8 +41,14 @@ const Profile: React.FunctionComponent<IProps> = (props: IProps) => {
 
             <div className="buttons">
                 <Link to="/" type="submit"><i className="fa-solid fa-house"></i></Link>
-                <Link to="/add" className="button" title="Add new gist"><i className="fa-solid fa-plus"></i></Link>
-                <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" ><i className="fa-brands fa-github"></i></a>
+
+                <Link to="/add" className="button" title="Add new gist">
+                    <i className="fa-solid fa-plus"></i>
+                </Link>
+
+                <a href="https://github.com/wblazej/GitGist" target="_blank" rel="noreferrer" >
+                    <i className="fa-brands fa-github"></i>
+                </a>
             </div>
         </div>
     )

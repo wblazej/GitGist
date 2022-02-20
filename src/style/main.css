@@ -10,7 +10,7 @@
     margin: 0;
     display: inline-block;
     vertical-align: middle;
-    margin-right: .5em;
+    margin-right: 0.5em;
 }
 
 .gist .files {
@@ -18,7 +18,7 @@
 }
 
 .gist .file {
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
 }
 
 .gist .file svg {
@@ -26,26 +26,26 @@
     height: 25px;
     border-radius: var(--border-radius);
     border: 1px solid var(--border-color);
-    padding: .5em;
+    padding: 0.5em;
     vertical-align: middle;
 }
 
 .gist .file .filename {
     font-size: 1.1rem;
     vertical-align: middle;
-    margin-left: .5em;
+    margin-left: 0.5em;
 }
 
 .gist .gist-info {
     text-transform: uppercase;
-    font-size: .7rem;
+    font-size: 0.7rem;
     margin-left: 1em;
     vertical-align: middle;
     color: var(--font-color);
     font-weight: bold;
     background-color: var(--main-color);
     border-radius: var(--border-radius);
-    padding: .5em .7em;
+    padding: 0.5em 0.7em;
 }
 
 .buttons-panel {
@@ -60,11 +60,11 @@
     aspect-ratio: 1/1;
     display: block;
     font-size: 1rem;
-    padding: .5em;
+    padding: 0.5em;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: .2em;
+    margin: 0.2em;
     border-radius: var(--border-radius);
     background-color: var(--main-color);
     cursor: pointer;
@@ -72,8 +72,8 @@
 
 .buttons-panel .page {
     font-size: 1.3rem;
-    margin-left: .5em;
-    margin-right: .5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
 
 .buttons-panel .button svg {
@@ -89,5 +89,5 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    margin-right: .5em;
+    margin-right: 0.5em;
 }

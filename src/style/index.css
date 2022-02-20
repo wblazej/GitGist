@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@300&display=swap");
 
 html {
     --theme-color: #23272d;
@@ -14,7 +14,7 @@ body {
     margin: 0;
     background-color: var(--theme-color);
     color: var(--font-color);
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
 }
 
 a {
@@ -23,7 +23,7 @@ a {
 }
 
 input {
-    font-family: 'Lato', sans-serif;
+    font-family: "Lato", sans-serif;
     color: var(--font-color);
 }
 
