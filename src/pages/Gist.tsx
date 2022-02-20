@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Light as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { LightAsync as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vs2015 as theme } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import { useParams, Link, useHistory } from "react-router-dom";
 
