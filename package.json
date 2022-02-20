@@ -1,5 +1,4 @@
 {
-  "homepage": "https://wblazej.github.io/GitGist",
   "name": "git-gist",
   "version": "0.1.0",
   "private": true,
@@ -28,7 +27,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "GENERATE_SOURCEMAP=false react-scripts build",
     "eject": "react-scripts eject",
     "test": "jest",
     "test:watch": "npm run test -- --watch",
