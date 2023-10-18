@@ -2,7 +2,7 @@
 
 <p align="center">
   <b>Semester final project from JavaScript on WSIZ</b><br><br>
-  <img src="https://www.wsi.edu.pl/wp-content/uploads/2019/05/Niebieski-logotyp_new.png">
+  <img src="https://www.wsi.edu.pl/favicon.ico">
 </p>
 
 ----
